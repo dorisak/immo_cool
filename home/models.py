@@ -10,4 +10,4 @@ class Administrator(models.Model):
         related_name='administrator_of',
     )
     def __str__(self):
-        return str(self.User.username)
+        return "{} {}".format(self.user_id.first_name, self.user_id.last_name)
