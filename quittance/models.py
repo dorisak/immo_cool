@@ -5,23 +5,27 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 
+#pour uploader avec les infos voulues
+def quittance_directory_path(instance, filename):
+    return 'quittance_{0}/{1}/{2}'.format(instance.quittance, filename, occupant)
 
 class Quittance(models.Model):
     #RENOMMER LES CHAMPS AVEC ID SANS LE MOT ID
-    property_id = models.ForeignKey(
+    quittance = models.FileField(upload_to=quittance_directory_path, blank=True)
+    property = models.ForeignKey(
         Property,
         on_delete=models.CASCADE,
         related_name='property',
         verbose_name="related property",
     )
-    occupant_id = models.ForeignKey(
+    occupant = models.ForeignKey(
         Occupant,
         on_delete=models.CASCADE,
         related_name='occupant',
         verbose_name="related occupant",
     )
     date = models.DateField()
-    bedroom_id = models.ForeignKey(
+    bedroom = models.ForeignKey(
         Bedroom,
         on_delete=models.CASCADE,
         related_name='bedroom',
@@ -30,4 +34,4 @@ class Quittance(models.Model):
     monthly_rent_paid = models.BooleanField(default=False)
     date_of_payment = models.DateField()
     def __str__(self):
-        return "{} - {} - {}".format(self.Occupant.first_name, self.Occupant.last_name, self.date)
+        return "{} - {}".format(self.occupant, self.date)

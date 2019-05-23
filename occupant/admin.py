@@ -10,7 +10,7 @@ class OccupantModelAdmin(admin.ModelAdmin):
     list_display = ['get_name', 'get_firstname', 'date_of_entry', 'date_of_leaving',
         'deposit', 'last_update', 'creation_date', 'get_suivi', 'is_active'
     ]
-    list_filter = ['user_id', 'is_active']
+    list_filter = ['user', 'is_active', 'occupant__property']
     inlines = [DocumentInline,]
 
     def get_suivi(self, occupant):
@@ -20,11 +20,11 @@ class OccupantModelAdmin(admin.ModelAdmin):
 
 
     def get_name(self, obj):
-        return obj.user_id.last_name
+        return obj.user.last_name
         get_name.short_description = "Name"
 
     def get_firstname(self, obj):
-        return obj.user_id.first_name
+        return obj.user.first_name
         get_firstname.short_description = "First name"
     #
     # def get_doc(self, obj):
