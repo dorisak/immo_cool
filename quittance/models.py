@@ -33,5 +33,12 @@ class Quittance(models.Model):
     )
     monthly_rent_paid = models.BooleanField(default=False)
     date_of_payment = models.DateField()
+    rental = models.ForeignKey(
+        "rental.Rental",
+        on_delete=models.SET_NULL,
+        related_name='rental_quittances',
+        verbose_name='related rental',
+        null=True
+    )
     def __str__(self):
         return "{} - {}".format(self.occupant, self.date)

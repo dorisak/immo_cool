@@ -5,6 +5,7 @@ from quittance.models import Quittance
 
 class QuittanceInline(admin.TabularInline):
     model = Quittance
+    fields = ['quittance']
 
 class BedroomAdminModel(admin.ModelAdmin):
     list_display = ['name', 'occupency', 'superficy']
@@ -17,7 +18,7 @@ class PropertyAdminModel(admin.ModelAdmin):
 class RentalAdminModel(admin.ModelAdmin):
     list_display = ['name', 'rent_amount', 'bedroom', 'property', 'archived']
     # POUR AFFICHER LES QUITTANCES DE LOYER
-    # inlines = [Quittance,]
+    inlines = [QuittanceInline,]
 
     def name(self, obj):
         return obj.occupant_id

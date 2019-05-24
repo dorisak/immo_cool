@@ -47,13 +47,6 @@ class Rental(models.Model):
         verbose_name="property for rental",
     )
     archived = models.BooleanField(default=False)
-    quittance = models.ForeignKey("quittance.Quittance",
-        on_delete=models.CASCADE,
-        related_name='quittance_rental',
-        verbose_name="quittance for rental",
-        null=True,
-        blank=True,
-    )
     #utiliser les chaines de caractères pour importer un modele sans erreur pour les foreign key pour eviter dependances cirulaires"
     def __str__(self):
         return "{} - {} - {}".format(self.occupant, self.rent_amount, self.archived)
