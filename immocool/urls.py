@@ -17,11 +17,14 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
+from django.urls import path, include
 from django.conf import settings
+from quittance.views import quittance_pdf
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('quittance/', include('quittance.urls', namespace='pdf'))
 ]
 
 urlpatterns += i18n_patterns(

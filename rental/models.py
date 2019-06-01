@@ -4,30 +4,33 @@ from occupant.models import Occupant
 
 
 
-class Bedroom(models.Model):
-    name = models.CharField(max_length=100)
-    occupency = models.BooleanField(default=False)
-    superficy = models.DecimalField(max_digits=3, decimal_places=0)
-    def __str__(self):
-        return "{} - {}".format(self.occupency, self.name)
-
 class Property(models.Model):
     name = models.CharField(max_length=150)
     address= models.CharField(max_length=250)
     number_of_bedroom = models.DecimalField(max_digits=2, decimal_places=0)
     superficy = models.DecimalField(max_digits=3, decimal_places=0)
-    bedroom = models.ForeignKey(Bedroom,
-        on_delete=models.CASCADE,
-        related_name='bedroom_property',
-        verbose_name="bedroom in property",
-    )
     administrator = models.ForeignKey(Administrator,
         on_delete=models.CASCADE,
         related_name='administrator_property',
         verbose_name="related administrator",
     )
     def __str__(self):
-        return "{} - {}".format(self.name, self.administrator)
+        return self.name
+
+
+class Bedroom(models.Model):
+    name = models.CharField(max_length=100)
+    occupency = models.BooleanField(default=False)
+    superficy = models.DecimalField(max_digits=3, decimal_places=0)
+    property = models.ForeignKey(Property,
+        on_delete = models.SET_NULL,
+        related_name = "property_bedroom",
+        verbose_name = "property for bedroom",
+        null=True
+    )
+    def __str__(self):
+        return "{} - {}".format(self.occupency, self.name)
+
 
 class Rental(models.Model):
     occupant = models.ForeignKey(Occupant,

@@ -1,0 +1,22 @@
+<html>
+<head>
+  <title>Test</title>
+  <style>
+  @page {
+        size: "A4";
+        margin: 2.5cm 1.5cm 3.5cm 1.5cm;
+    }
+    body {
+      background-color: #f7f7f7;
+    }
+    </style>
+</head>
+<body>
+  <h1>Test Template</h1>
+  {% for rental in rentals %}
+    <p>{{ rental.occupant }}</p>
+    <p>{{ rental }}</p>
+  {% endfor %}
+  <p>La présente quittance est à régler dans les 10 jours suivants son envoi.<p>
+</body>
+</html>

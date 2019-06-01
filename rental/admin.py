@@ -5,31 +5,33 @@ from quittance.models import Quittance
 
 class QuittanceInline(admin.TabularInline):
     model = Quittance
-    fields = ['quittance']
+    fields = ['quittance', 'monthly_rent_paid']
 
 class BedroomAdminModel(admin.ModelAdmin):
-    list_display = ['name', 'occupency', 'superficy']
-    list_filter = ['occupency']
+    list_display = ['name', 'occupency', 'superficy', 'property']
+    list_filter = ['occupency', 'property']
 
 class PropertyAdminModel(admin.ModelAdmin):
-    list_display = ['name', 'number_of_bedroom', 'superficy', 'bedroom', 'administrator']
+    list_display = ['name', 'number_of_bedroom', 'superficy', 'administrator']
     list_filter = ['name', 'administrator']
+    #INLINES POUR AFFICHER LES CHAMBRES OU PAS ?????
 
 class RentalAdminModel(admin.ModelAdmin):
     list_display = ['name', 'rent_amount', 'bedroom', 'property', 'archived']
+    list_filter = ['property', 'property__administrator']
     # POUR AFFICHER LES QUITTANCES DE LOYER
     inlines = [QuittanceInline,]
 
     def name(self, obj):
-        return obj.occupant_id
+        return obj.occupant
         name.short_description = "Name"
 
     def bedroom(self, obj):
-        return obj.bedroom_id.name
+        return obj.bedroom.name
         bedroom.short_description = "Bedroom"
 
     def property(self, obj):
-        return obj.property_id.name
+        return obj.property.name
         property.short_description = "Property"
 
 admin.site.register(Bedroom, BedroomAdminModel)

@@ -10,7 +10,6 @@ def quittance_directory_path(instance, filename):
     return 'quittance_{0}/{1}/{2}'.format(instance.quittance, filename, occupant)
 
 class Quittance(models.Model):
-    #RENOMMER LES CHAMPS AVEC ID SANS LE MOT ID
     quittance = models.FileField(upload_to=quittance_directory_path, blank=True)
     property = models.ForeignKey(
         Property,
@@ -24,7 +23,6 @@ class Quittance(models.Model):
         related_name='occupant',
         verbose_name="related occupant",
     )
-    date = models.DateField()
     bedroom = models.ForeignKey(
         Bedroom,
         on_delete=models.CASCADE,
@@ -32,7 +30,7 @@ class Quittance(models.Model):
         verbose_name="related bedroom",
     )
     monthly_rent_paid = models.BooleanField(default=False)
-    date_of_payment = models.DateField()
+    date_of_issue = models.DateField(blank=True)
     rental = models.ForeignKey(
         "rental.Rental",
         on_delete=models.SET_NULL,
@@ -41,4 +39,4 @@ class Quittance(models.Model):
         null=True
     )
     def __str__(self):
-        return "{} - {}".format(self.occupant, self.date)
+        return "{} - {}".format(self.occupant, self.date_of_issue)
