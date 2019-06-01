@@ -7,9 +7,18 @@ class QuittanceInline(admin.TabularInline):
     model = Quittance
     fields = ['quittance', 'monthly_rent_paid']
 
+def bulk_bedroom_occupency(modeladmin, request, queryset):
+    queryset.update(occupency=True)
+bulk_bedroom_occupency.short_description = "Indiquer les chambres occupées"
+
+def bulk_bedroom_empty(modeladmin, request, queryset):
+    queryset.update(occupency=False)
+bulk_bedroom_empty.short_description = "Indiquer les chambres libres"
+
 class BedroomAdminModel(admin.ModelAdmin):
     list_display = ['name', 'occupency', 'superficy', 'property']
     list_filter = ['occupency', 'property']
+    actions = [bulk_bedroom_occupency, bulk_bedroom_empty]
 
 class PropertyAdminModel(admin.ModelAdmin):
     list_display = ['name', 'number_of_bedroom', 'superficy', 'administrator']

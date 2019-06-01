@@ -9,5 +9,6 @@ class Administrator(models.Model):
         on_delete=models.CASCADE,
         related_name='administrator_of',
     )
+    address = models.CharField(max_length=250, default='None')
     def __str__(self):
         return "{} {}".format(self.user.first_name, self.user.last_name)

@@ -4,19 +4,101 @@
   <style>
   @page {
         size: "A4";
-        margin: 2.5cm 1.5cm 3.5cm 1.5cm;
+        margin: 2.5cm 1.5cm 2.5cm 1.5cm;
     }
     body {
       background-color: #f7f7f7;
     }
+    h1 {
+      color: #009999;
+      text-align: center;
+    }
+    h4 {
+      color: #023e52;
+    }
+    p {
+      text-align: justify;
+    }
+    table {
+      width: 100%;
+    }
+    th, td {
+      border-bottom: 1px solid #ddd;
+      padding: 10px;
+    }
+    th {
+      background-color: #023e52;
+      color: white;
+    }
+    .text {
+      margin-top: 10%;
+    }
+    .administrator {
+      position: relative;
+    }
+    .occupant {
+      position: absolute;
+      right: 0px;
+      top: 40px;
+    }
+    .title {
+      padding: 30px;
+    }
     </style>
 </head>
 <body>
-  <h1>Test Template</h1>
-  {% for rental in rentals %}
-    <p>{{ rental.occupant }}</p>
-    <p>{{ rental }}</p>
-  {% endfor %}
-  <p>La présente quittance est à régler dans les 10 jours suivants son envoi.<p>
+  <div class="administrator">
+    <h4>{{ rentals.property.administrator }}</h4>
+    <h4>{{ rentals.property.administrator.address }}</h4>
+  </div>
+  <div class="occupant">
+    <h4>{{ rentals.occupant }}</h4>
+    <h4>{{ rentals.property.address }}</h4>
+  </div>
+  <div class="title">
+    <h1>QUITTANCE DE LOYER</h1>
+  </div>
+  <p>Délivrée le {{ today }}</p>
+  <table>
+    <tr>
+      <th>Bien</th>
+    </tr>
+    <tr>
+      <td>Type : {{ rentals.bedroom }}</td>
+    </tr>
+    <tr>
+      <td>Adresse : {{ rentals.property }}</td>
+    </tr>
+    <tr>
+      <td>{{ rentals.property.address }}</td>
+    </tr>
+    <tr>
+      <th>Locataire</th>
+    </tr>
+    <tr>
+      <td>{{ rentals.occupant }}</td>
+    </tr>
+    <tr>
+      <th>Opérations</th>
+      <th>Montant</th>
+    </tr>
+    <tr style="background-color: #fbbf4f">
+      <td>Loyer</td>
+      <td>{{ rentals.rent_amount }} €</td>
+    </tr>
+    <tr style="background-color: #fbbf4f">
+      <td>Provisions sur charges</td>
+      <td>{{ rentals.charges }} €</td>
+    </tr>
+    <tr>
+      <th style="background-color: rgb(0,153,153)">Total</th>
+      <th style="background-color: rgb(0,153,153)">{{ sum_rent }} €</th>
+    </tr>
+  </table>
+  <div class="text">
+    <p>La présente quittance est à régler dans les 10 jours suivants son envoi.Le paiement de la présente quittance n’emporte pas présomption de paiement des termes antérieurs. Sous réserve de tous les droits et actions du propriétaire, de toutes poursuites qui auraient pu être engagées. En cas de congé précédemment donné, cette quittance représenterait une indemnité d'occupation des lieux et ne saurait être considérée comme un titre de location.
+    Cette quittance annule tous les reçus qui auraient pu être données pour acomptes versés, même si ces reçus portent une date postérieure à la date ci-contre.
+    <p>
+  </div>
 </body>
 </html>

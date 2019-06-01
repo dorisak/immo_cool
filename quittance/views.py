@@ -15,11 +15,11 @@ def quittance_pdf(request):
     #filtrer sur une location pour avoir le rendu sur un seul locataire - id locataire
     #pour la commande : tous les rental non archivés puis boucle dans queryset et produire pdf pour chaque rental
     #puis email avec fonction sendemail de django et enregistrer en base avec la commande personnalisée - smtp d'un compte gmail- mailgun - créer un compte mail dédié - attention aux tests mails avant la soutenance
-    rentals = Rental.objects.filter(archived=False)
+    rentals = Rental.objects.filter(archived=False).first()
     today = datetime.date.today()
     date = today.strftime('%Y-%m-%d')
-    for rental in rentals:
-        name = slugify(rental.occupant)
+    name = slugify(rentals.occupant)
+    sum_rent = rentals.charges+rentals.rent_amount
     # filename = '{date}-{name}-quittance.pdf'
     filename = 'mypdf.pdf'
     response = HttpResponse(content_type="application/pdf")
@@ -28,7 +28,9 @@ def quittance_pdf(request):
 
 
     html = render_to_string("quittance/quittance_base.html", {
-        'rentals': rentals
+        'rentals': rentals,
+        'today': today,
+        'sum_rent': sum_rent,
             # 'occupant_name': rental.occupant.name,
             # 'occupant_firstname': rental.occupant.occupant.firstname,
             # 'property': rental.property.name,

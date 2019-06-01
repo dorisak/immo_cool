@@ -29,7 +29,7 @@ class Bedroom(models.Model):
         null=True
     )
     def __str__(self):
-        return "{} - {}".format(self.occupency, self.name)
+        return self.name
 
 
 class Rental(models.Model):
@@ -44,6 +44,7 @@ class Rental(models.Model):
         verbose_name="bedroom for rental",
     )
     rent_amount = models.DecimalField(max_digits=4, decimal_places=0)
+    charges = models.DecimalField(max_digits=4, decimal_places=0, default=0)
     property = models.ForeignKey(Property,
         on_delete=models.CASCADE,
         related_name='property_rental',
