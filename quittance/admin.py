@@ -7,9 +7,8 @@ def bulk_rent_paid(modeladmin, request, queryset):
 bulk_rent_paid.short_description = "Indiquer les quittances payées"
 
 class QuittanceAdminModel(admin.ModelAdmin):
-    list_display = ['property', 'bedroom', 'occupant', 'monthly_rent_paid', 'date_of_issue']
+    list_display = ['monthly_rent_paid', 'date_of_issue']
     date_hierarchy = 'date_of_issue'
-    list_filter = ['property']
     actions = [bulk_rent_paid]
 
 admin.site.register(Quittance, QuittanceAdminModel)

@@ -1,33 +1,61 @@
+""" Create a quittance each month for each occupant """
+
 # -*- coding: UTF-8 -*-
 from __future__ import unicode_literals
-from django.http import HttpResponse
+from io import BytesIO
+from django.core.management.base import BaseCommand, CommandError
+from django.core.mail import EmailMessage
+from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseNotFound
 from django.template.loader import render_to_string
 from django.utils.text import slugify
 from weasyprint import HTML
 from weasyprint.fonts import FontConfiguration
 from rental.models import Rental
+from quittance.models import Quittance
+from django.shortcuts import get_object_or_404
 import datetime
 
+help = 'Create a quittance each month for each occupant'
 
-def quittance_pdf(request):
-    rentals = get_object_or_404(Rental, archived=False)
-    today = datetime.date.today()
-    # for rental in rentals:
-    response = HttpResponse(content_type="application/pdf")
-    response['Content-Disposition'] = "inline; filename={date}-{name}-quittance.pdf".format(
-        date=today.strftime('%Y-%m-%d'),
-        name=slugify(rentals.occupant.last_name),
-    )
-    html = render_to_string("quittance/quittance_base.html", {
-        'rentals': rentals
-            # 'occupant_name': rental.occupant.name,
-            # 'occupant_firstname': rental.occupant.occupant.firstname,
-            # 'property': rental.property.name,
-            # 'property_address': rental.property.address,
-            # 'bedroom': rental.bedroom.name,
-            # 'rent_amount': rental.rent_amount,
-            # 'date_of_issue': today,
-    })
 
-    HTML(string=html).write_pdf(response)
-    return response
+class Command(BaseCommand):
+    """ GET the quittance for each occupant """
+
+    def handle(self, *args, **options):
+        rentals = Rental.objects.filter(archived=False)
+        today = datetime.date.today()
+
+        for rental in rentals:
+            try:
+                id = rental
+                name = slugify(rental.occupant)
+                date = today.strftime('%Y-%m-%d')
+                sum_rent = rental.charges+rental.rent_amount
+                filename = '{}-{}-quittance.pdf'.format(date, name)
+                response = HttpResponse(content_type="application/pdf")
+                response['Content-Disposition'] = "attachement; filename= {}".format(filename)
+
+                html_string = render_to_string("quittance/quittance_base.html", {
+                    'rentals': rental,
+                    'today': today,
+                    'sum_rent': sum_rent,
+                })
+                html = HTML(string=html_string)
+                result = html.write_pdf(response)
+                print(response['Content-Disposition'])
+
+                # if result != None:
+                quittance_saved = Quittance(
+                    quittance = result,
+                    date_of_issue = today,
+                    rental = id
+                )
+                quittance_saved.save()
+
+                self.stdout.write('Occupant %s will receive the quittance %s' % (rental.occupant, filename))
+                # else:
+                    # self.stdout.write('Quittance for %s could not be generated' % rental.occupant)
+
+            except Rental.DoesNotExist:
+                self.stdout.write('Occupant "%s" does not exist.' % rental.occupant)

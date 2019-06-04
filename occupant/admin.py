@@ -10,7 +10,7 @@ class OccupantModelAdmin(admin.ModelAdmin):
     list_display = ['get_name', 'get_firstname', 'date_of_entry', 'date_of_leaving',
         'deposit', 'last_update', 'creation_date', 'get_suivi', 'is_active'
     ]
-    list_filter = ['user__last_name', 'is_active', 'occupant__property']
+    list_filter = ['user__last_name', 'is_active']
     inlines = [DocumentInline,]
 
     def get_suivi(self, occupant):
