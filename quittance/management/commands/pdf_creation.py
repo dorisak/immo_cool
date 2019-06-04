@@ -2,7 +2,6 @@
 
 # -*- coding: UTF-8 -*-
 from __future__ import unicode_literals
-from io import BytesIO
 from django.core.management.base import BaseCommand, CommandError
 from django.core.mail import EmailMessage
 from django.shortcuts import render
