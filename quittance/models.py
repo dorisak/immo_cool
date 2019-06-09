@@ -1,8 +1,12 @@
 from django.db import models
+from io import BytesIO
+from django.core.files import File
+# from .commands import handle
 from rental.models import Property, Bedroom
 from occupant.models import Occupant
 from django.conf import settings
 from django.contrib.auth.models import User
+
 
 
 #pour uploader avec les infos voulues
@@ -40,3 +44,11 @@ class Quittance(models.Model):
     )
     def __str__(self):
         return "{} - {}".format(self.rental.occupant, self.date_of_issue)
+
+        # to generate and save your pdf to your model
+    def generate_obj_pdf(instance_id):
+         obj = Quittance.objects.get(id=instance_id)
+         context = {'instance': obj}
+             # pdf = render_to_pdf('quittance/quittance_base.html', context)
+         filename = '{}-{}-quittance.pdf'.format(rental.date, rental.name)
+         obj.pdf.save(filename, File(BytesIO(pdf.content)))

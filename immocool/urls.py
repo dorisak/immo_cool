@@ -14,17 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf import settings
-from quittance.views import quittance_pdf
+from quittance import views
+from home import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('quittance/', include('quittance.urls', namespace='pdf'))
+    path('', include('home.urls', namespace='home')),
+    path('quittance/', include('quittance.urls', namespace='pdf')),
 ]
 
 urlpatterns += i18n_patterns(

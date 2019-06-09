@@ -130,3 +130,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+ADMINS = [
+    ('Doris', 'datxik@gmail.com'), ('dodo', 'doriss_91@hotmail.com')
+]
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'datxik@gmail.com'
+EMAIL_HOST_PASSWORD = 'Supermoi91816?'
+EMAIL_PORT = 587
