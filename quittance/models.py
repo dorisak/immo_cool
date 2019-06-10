@@ -1,7 +1,8 @@
 from django.db import models
 from io import BytesIO
+import os
 from django.core.files import File
-# from .commands import handle
+from django.dispatch import receiver
 from rental.models import Property, Bedroom
 from occupant.models import Occupant
 from django.conf import settings
@@ -11,28 +12,10 @@ from django.contrib.auth.models import User
 
 #pour uploader avec les infos voulues
 def quittance_directory_path(instance, filename):
-    return 'quittance_{0}_{1}'.format(instance.quittance, filename)
+    return 'quittance_{0}_{1}'.format(instance.rental.id, filename)
 
 class Quittance(models.Model):
     quittance = models.FileField(upload_to=quittance_directory_path, blank=True)
-    # property = models.ForeignKey(
-    #     Property,
-    #     on_delete=models.CASCADE,
-    #     related_name='property',
-    #     verbose_name="related property",
-    # )
-    # occupant = models.ForeignKey(
-    #     Occupant,
-    #     on_delete=models.CASCADE,
-    #     related_name='occupant',
-    #     verbose_name="related occupant",
-    # )
-    # bedroom = models.ForeignKey(
-    #     Bedroom,
-    #     on_delete=models.CASCADE,
-    #     related_name='bedroom',
-    #     verbose_name="related bedroom",
-    # ) A SUPPRIMER ET SURTOUT VOIR SI JE PEUX FAIRE APPEL A LA FK RENTAL POUR AFFICHER CES INFOS
     monthly_rent_paid = models.BooleanField(default=False)
     date_of_issue = models.DateField(blank=True)
     rental = models.ForeignKey(
@@ -45,10 +28,9 @@ class Quittance(models.Model):
     def __str__(self):
         return "{} - {}".format(self.rental.occupant, self.date_of_issue)
 
-        # to generate and save your pdf to your model
-    def generate_obj_pdf(instance_id):
-         obj = Quittance.objects.get(id=instance_id)
-         context = {'instance': obj}
-             # pdf = render_to_pdf('quittance/quittance_base.html', context)
-         filename = '{}-{}-quittance.pdf'.format(rental.date, rental.name)
-         obj.pdf.save(filename, File(BytesIO(pdf.content)))
+@receiver(models.signals.post_delete, sender=Quittance)
+def auto_delete_quittance_on_delete(sender, instance, **kwargs):
+    """ Deletes quittance from filesystem when corresponding `MediaFile` object is deleted."""
+    if instance.quittance:
+        if os.path.isfile(instance.quittance.path):
+            os.remove(instance.quittance.path)

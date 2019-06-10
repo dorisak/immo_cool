@@ -1,20 +1,22 @@
 """ Create a quittance each month for each occupant """
-
 # -*- coding: UTF-8 -*-
 from __future__ import unicode_literals
 from django.core.management.base import BaseCommand, CommandError
 from django.core.mail import EmailMessage
-from io import BytesIO
+from django.conf import settings
 from django.core.files import File
+from django.core.mail import EmailMessage
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound
 from django.template.loader import render_to_string
 from django.utils.text import slugify
+from django.utils.translation import ugettext_lazy as _
 from weasyprint import HTML
 from weasyprint.fonts import FontConfiguration
 from rental.models import Rental
 from quittance.models import Quittance
 from django.shortcuts import get_object_or_404
+from io import BytesIO
 import datetime
 import tempfile
 
@@ -28,6 +30,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         rentals = Rental.objects.filter(archived=False)
         today = datetime.date.today()
+        current_month = _(today.strftime('%B'))
+
 
         for rental in rentals:
             try:
@@ -35,7 +39,8 @@ class Command(BaseCommand):
                 name = slugify(rental.occupant)
                 date = today.strftime('%Y-%m-%d')
                 sum_rent = rental.charges+rental.rent_amount
-                filename = '{}-{}-quittance.pdf'.format(date, name)
+                occupant_email = rental.occupant.user.email
+                filename = '{}-{}.pdf'.format(date, name)
                 # response = HttpResponse(content_type="application/pdf")
                 # response['Content-Disposition'] = "attachement; filename= {}".format(filename)
 
@@ -48,25 +53,34 @@ class Command(BaseCommand):
                 with tempfile.TemporaryDirectory() as tmpdirname:
                     result = html.write_pdf(target='{tmpdirname}{filename}'.format(tmpdirname=tempfile.gettempdir(), filename=filename))
 
-                    test = open('{tmpdirname}{filename}'.format(tmpdirname=tempfile.gettempdir(), filename=filename), 'rb+')
+                    quittance_to_store = open('{tmpdirname}{filename}'.format(tmpdirname=tempfile.gettempdir(), filename=filename), 'rb+')
                     # Convert it to a Django File.
-                    django_file = File(test)
+                    django_file = File(quittance_to_store)
                     stored_quittance = Quittance()
                     stored_quittance.date_of_issue = today
                     stored_quittance.rental = id
-                    stored_quittance.quittance.save(filename, django_file, save=True)
-
-                     # with tmpdirname.open() as pdf:
-                # if result != None:
-                #     quittance_saved = Quittance(
-                #         quittance = result,
-                #         date_of_issue = today,
-                #         rental = id
-                #     )
-                #     quittance_saved.save()
+                    saved_quittance = stored_quittance.quittance.save(filename, django_file, save=True)
                     self.stdout.write('Occupant %s will receive the quittance %s' % (rental.occupant, filename))
-                # else:
-                #     self.stdout.write('Quittance for %s could not be generated' % rental.occupant)
+
+                    try:
+                        occupant_name = rental.occupant.user.last_name
+                        occupant_firstname = rental.occupant.user.first_name
+                        # content = open(filename, 'rb').read()
+                        # attachment = (filename, content, 'application/pdf')
+                        #Send the email with quittance as attachment
+                        message = "Bonjour {} {} - Vous trouverez ci-joint la quittance de loyer pour {}".format(
+                            occupant_name, occupant_firstname, current_month,
+                            # attachments=attachment
+                        )
+                        email_from = settings.EMAIL_HOST_USER
+                        email = EmailMessage(
+                            'Quittance de loyer', message, email_from,
+                            [occupant_email],)
+                        email.attach_file(stored_quittance.quittance.path)
+                        email.send(fail_silently=False)
+                        self.stdout.write("Le mail pour {} a bien été envoyé".format(rental.occupant))
+                    except Rental.DoesNotExist:
+                        self.stdout.write("Le mail pour {} n\'a pas pu être envoyé".format(rental.occupant))
 
             except Rental.DoesNotExist:
                 self.stdout.write('Occupant "%s" does not exist.' % rental.occupant)

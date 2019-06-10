@@ -5,11 +5,8 @@ from django.core import management
 from django.core.mail import mail_admins
 from datetime import datetime, date
 from quittance.models import Quittance
-from django.core.mail import EmailMessage
 from django.conf import settings
 from django.core.mail import send_mail
-
-
 
 
 class Command(BaseCommand):
@@ -21,8 +18,8 @@ class Command(BaseCommand):
         current_year = today.year
 
         in_late = Quittance.objects.filter(
-            date_of_issue__gt=date(current_year, current_month, 2),
-            monthly_rent_paid=False
+            date_of_issue__gt = date(current_year, current_month, 2),
+            monthly_rent_paid = False
         )
         for people in in_late:
             try:
@@ -36,10 +33,10 @@ class Command(BaseCommand):
 
                 email = send_mail(
                     fail_silently=False,
-                    subject='Alerte - loyer en retard',
-                    message=message,
-                    from_email=email_from,
-                    recipient_list=recipient_list
+                    subject = 'Alerte - loyer en retard',
+                    message = message,
+                    from_email = email_from,
+                    recipient_list = recipient_list
                 )
 
             except Quittance.DoesNotExist:
