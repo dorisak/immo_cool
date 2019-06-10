@@ -4,121 +4,85 @@
 <html lang="fr">
     <head>
         <title>Immo Cool - Gérez vos propriétés facilement !</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" charset="UTF-8">
+        <meta charset="utf-8">
         <meta name="description" content="Application django de gestion immobilière" />
         <meta name="keywords" content="HTML, CSS, JavaScript, PHP, DJANGO" />
         <meta name="author" content="MATXIK" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        	<!-- Favicons (created with http://realfavicongenerator.net/)-->
-      	<link rel="apple-touch-icon" sizes="57x57" href="img/favicons/apple-touch-icon-57x57.png">
-      	<link rel="apple-touch-icon" sizes="60x60" href="img/favicons/apple-touch-icon-60x60.png">
-      	<link rel="icon" type="image/png" href="img/favicons/favicon-32x32.png" sizes="32x32">
-      	<link rel="icon" type="image/png" href="img/favicons/favicon-16x16.png" sizes="16x16">
-      	<link rel="manifest" href="img/favicons/manifest.json">
-      	<link rel="shortcut icon" href="img/favicons/favicon.ico">
-      	<meta name="msapplication-TileColor" content="#00a8ff">
-      	<meta name="msapplication-config" content="img/favicons/browserconfig.xml">
-      	<meta name="theme-color" content="#ffffff">
-      	<!-- Normalize -->
-      	<link rel="stylesheet" type="text/css" href="{% static 'home/css/normalize.css' %}">
-      	<!-- Bootstrap -->
-      	<link rel="stylesheet" type="text/css" href="{% static 'home/css/bootstrap.css' %}">
-      	<!-- Owl -->
-      	<link rel="stylesheet" type="text/css" href="{% static 'home/css/owl.css' %}">
-      	<!-- Animate.css -->
-      	<link rel="stylesheet" type="text/css" href="{% static 'home/css/animate.css' %}">
-      	<!-- Font Awesome -->
-      	<link rel="stylesheet" type="text/css" href="{% static 'home/fonts/font-awesome-4.1.0/css/font-awesome.min.css' %}">
-      	<!-- Elegant Icons -->
-      	<link rel="stylesheet" type="text/css" href="{% static 'home/fonts/eleganticons/et-icons.css' %}">
-      	<!-- Main style -->
-      	<link rel="stylesheet" type="text/css" href="{% static 'home/css/cardio.css' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap core CSS -->
+       <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+       <!-- Custom fonts for this template -->
+       <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+       <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+       <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+       <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+       <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+       <!-- Custom styles for this template -->
+       <link href="{% static 'home/css/agency.css' %}" rel="stylesheet">
     </head>
 
-    <body>
-    	<!-- <div class="preloader">
-    		<img src="{% static 'home/img/loader.gif' %}" alt="Preloader image">
-    	</div> -->
-    	<nav class="navbar">
-    		<div class="container">
-    			<!-- Brand and toggle get grouped for better mobile display -->
-    			<div class="navbar-header">
-    				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-    					<span class="sr-only">Toggle navigation</span>
-    					<span class="icon-bar"></span>
-    					<span class="icon-bar"></span>
-    					<span class="icon-bar"></span>
-    				</button>
-    				<a class="navbar-brand" href="#"><img src="img/logo.png" data-active-url="img/logo-active.png" alt=""></a>
-    			</div>
-    			<!-- Collect the nav links, forms, and other content for toggling -->
-    			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    				<ul class="nav navbar-nav navbar-right main-nav">
-    					<li><a href="#intro">Intro</a></li>
-    					<li><a href="#services">Services</a></li>
-    					<li><a href="#team">Team</a></li>
-    					<li><a href="#pricing">Pricing</a></li>
-    					<li><a href="#" data-toggle="modal" data-target="#modal1" class="btn btn-blue">Sign Up</a></li>
-    				</ul>
-    			</div>
-    			<!-- /.navbar-collapse -->
-    		</div>
-    		<!-- /.container-fluid -->
-    	</nav>
+    <body id="page-top">
+
+      <!-- Navigation -->
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+          <a class="navbar-brand js-scroll-trigger" href="#page-top">Immo Cool</a>
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ml-auto">
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#services">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#portfolio">Calendrier</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
 
       {% block corps %}
       {% endblock %}
 
-      <footer>
-    		<div class="container">
-    			<div class="row">
-    				<div class="col-sm-6 text-center-mobile">
-    					<h3 class="white">Reserve a Free Trial Class!</h3>
-    					<h5 class="light regular light-white">Shape your body and improve your health.</h5>
-    					<a href="#" class="btn btn-blue ripple trial-button">Start Free Trial</a>
-    				</div>
-    				<div class="col-sm-6 text-center-mobile">
-    					<h3 class="white">Opening Hours <span class="open-blink"></span></h3>
-    					<div class="row opening-hours">
-    						<div class="col-sm-6 text-center-mobile">
-    							<h5 class="light-white light">Mon - Fri</h5>
-    							<h3 class="regular white">9:00 - 22:00</h3>
-    						</div>
-    						<div class="col-sm-6 text-center-mobile">
-    							<h5 class="light-white light">Sat - Sun</h5>
-    							<h3 class="regular white">10:00 - 18:00</h3>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-    			<div class="row bottom-footer text-center-mobile">
-    				<div class="col-sm-8">
-    					<p>&copy; 2015 All Rights Reserved. Powered by <a href="http://www.phir.co/">PHIr</a> exclusively for <a href="http://tympanus.net/codrops/">Codrops</a></p>
-    				</div>
-    				<div class="col-sm-4 text-right text-center-mobile">
-    					<ul class="social-footer">
-    						<li><a href="http://www.facebook.com/pages/Codrops/159107397912"><i class="fa fa-facebook"></i></a></li>
-    						<li><a href="http://www.twitter.com/codrops"><i class="fa fa-twitter"></i></a></li>
-    						<li><a href="https://plus.google.com/101095823814290637419"><i class="fa fa-google-plus"></i></a></li>
-    					</ul>
-    				</div>
-    			</div>
-    		</div>
-    	</footer>
-    	<!-- Holder for mobile navigation -->
-    	<div class="mobile-nav">
-    		<ul>
-    		</ul>
-    		<a href="#" class="close-link"><i class="arrow_up"></i></a>
-    	</div>
-    	<!-- Scripts -->
-    	<script src="{% static 'home/js/jquery-1.11.1.min.js' %}"></script>
-    	<script src="{% static 'home/js/owl.carousel.min.js' %}"></script>
-    	<script src="{% static 'home/js/bootstrap.min.js' %}"></script>
-    	<script src="{% static 'home/js/wow.min.js' %} "></script>
-    	<script src="{% static 'home/js/typewriter.js' %}"></script>
-    	<script src="{% static 'home/js/jquery.onepagenav.js' %}"></script>
-    	<script src="{% static 'home/js/main.js' %}"></script>
+    <!-- Footer -->
+      <footer class="footer">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-4">
+              <span class="copyright">MATXIK pour Immocool</span>
+            </div>
+            <!-- <div class="col-md-4">
+              <ul class="list-inline quicklinks">
+                <li class="list-inline-item">
+                  <a href="#">Privacy Policy</a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#">Terms of Use</a>
+                </li>
+              </ul>
+            </div> -->
+          </div>
+        </div>
+      </footer>
+          <!-- Bootstrap core JavaScript -->
+     <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+     <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+     <!-- Plugin JavaScript -->
+     <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+     <!-- Contact form JavaScript -->
+     <script src="{% static 'js/jqBootstrapValidation.js' %}"></script>
+     <script src="{% static 'js/contact_me.js' %}"></script>
+
+     <!-- Custom scripts for this template -->
+     <script src="{% static 'js/agency.min.js' %}"></script>
+
     </body>
 
 </html>

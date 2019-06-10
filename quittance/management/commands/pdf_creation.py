@@ -41,8 +41,6 @@ class Command(BaseCommand):
                 sum_rent = rental.charges+rental.rent_amount
                 occupant_email = rental.occupant.user.email
                 filename = '{}-{}.pdf'.format(date, name)
-                # response = HttpResponse(content_type="application/pdf")
-                # response['Content-Disposition'] = "attachement; filename= {}".format(filename)
 
                 html_string = render_to_string("quittance/quittance_base.html", {
                     'rentals': rental,
@@ -65,12 +63,10 @@ class Command(BaseCommand):
                     try:
                         occupant_name = rental.occupant.user.last_name
                         occupant_firstname = rental.occupant.user.first_name
-                        # content = open(filename, 'rb').read()
-                        # attachment = (filename, content, 'application/pdf')
-                        #Send the email with quittance as attachment
-                        message = "Bonjour {} {} - Vous trouverez ci-joint la quittance de loyer pour {}".format(
-                            occupant_name, occupant_firstname, current_month,
-                            # attachments=attachment
+                        admin_name = rental.administrator.user.last_name
+                        admin_firstname = rental.administrator.user.first_name
+                        message = "Bonjour {} {} - Vous trouverez ci-joint la quittance de loyer pour {}; Cordialement, {} {}".format(
+                            occupant_name, occupant_firstname, current_month, admin_firstname, admin_name
                         )
                         email_from = settings.EMAIL_HOST_USER
                         email = EmailMessage(

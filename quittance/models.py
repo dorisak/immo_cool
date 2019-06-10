@@ -10,12 +10,12 @@ from django.contrib.auth.models import User
 
 
 
-#pour uploader avec les infos voulues
+#pour uploader avec les infos voulues - NON UTILISE CAR GENERE ENVOI DE 2 PDF DANS PDF_CREATION
 def quittance_directory_path(instance, filename):
     return 'quittance_{0}_{1}'.format(instance.rental.id, filename)
 
 class Quittance(models.Model):
-    quittance = models.FileField(upload_to=quittance_directory_path, blank=True)
+    quittance = models.FileField(upload_to='quittances_pdf/', blank=True)
     monthly_rent_paid = models.BooleanField(default=False)
     date_of_issue = models.DateField(blank=True)
     rental = models.ForeignKey(
