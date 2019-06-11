@@ -9,7 +9,7 @@
       <!-- <div class="intro-heading text-uppercase">It's Nice To Meet You</div> -->
       <!-- <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Tell Me More</a> -->
     </div>
-    <div class="dashboard">
+    <div class="dashboard" id="dashboard">
       <h3>Dashboard</h3>
       {% for people in admin_dash %}
       <div class="admin_board">
@@ -37,7 +37,7 @@
         </div>
         <a href="admin/">
           <div class="btn btn-primary btn-xl">
-            Mettre à jour
+            Gérer
           </div>
         </a>
       </div>
@@ -47,38 +47,58 @@
 </header>
 
 <!-- Services -->
-<section class="page-section" id="services">
+<section class="page-section" id="gestion">
   <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center">
-        <h2 class="section-heading text-uppercase">Actions</h2>
-        <h3 class="section-subheading text-muted">Ajouter de nouveaux éléments</h3>
+        <h2 class="section-heading text-uppercase">Gérer les locations</h2>
+        <h3 class="section-subheading text-muted">Ajouter de nouveaux éléments pour gérer vos locations</h3>
       </div>
     </div>
     <div class="row text-center">
-      <div class="col-md-4">
+      <div class="col-md-3">
         <span class="fa-stack fa-4x">
           <i class="fas fa-circle fa-stack-2x text-primary"></i>
-          <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
+          <i class="fas fa-user-plus fa-stack-1x fa-inverse"></i>
         </span>
-        <h4 class="service-heading">Nouveau locataire</h4>
-        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+        <a href="{% url 'admin:occupant_occupant_add' %}" >
+          <div class="btn btn-primary btn-xl">
+            Nouveau locataire
+          </div>
+        </a>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <span class="fa-stack fa-4x">
           <i class="fas fa-circle fa-stack-2x text-primary"></i>
-          <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
+          <i class="fas fa-home fa-stack-1x fa-inverse"></i>
         </span>
-        <h4 class="service-heading">Nouvelle propriété</h4>
-        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+        <a href="{% url 'admin:rental_property_add' %}" >
+          <div class="btn btn-primary btn-xl">
+            Nouvelle propriété
+          </div>
+        </a>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <span class="fa-stack fa-4x">
           <i class="fas fa-circle fa-stack-2x text-primary"></i>
-          <i class="fas fa-lock fa-stack-1x fa-inverse"></i>
+          <i class="fas fa-euro-sign fa-stack-1x fa-inverse"></i>
         </span>
-        <h4 class="service-heading">Quittance de loyer</h4>
-        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+        <a href="{% url 'admin:quittance_quittance_changelist' %}" >
+          <div class="btn btn-primary btn-xl">
+            Quittances de loyer
+          </div>
+        </a>
+      </div>
+      <div class="col-md-3">
+        <span class="fa-stack fa-4x">
+          <i class="fas fa-circle fa-stack-2x text-primary"></i>
+          <i class="far fa-address-card fa-stack-1x fa-inverse"></i>
+        </span>
+        <a href="{% url 'admin:rental_rental_add' %}" >
+          <div class="btn btn-primary btn-xl">
+            Nouvelle location
+          </div>
+        </a>
       </div>
     </div>
   </div>
