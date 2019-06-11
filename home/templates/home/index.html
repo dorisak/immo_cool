@@ -10,14 +10,20 @@
       <!-- <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Tell Me More</a> -->
     </div>
     <div class="dashboard">
-      <p>Dashboard</p>
-      {% for people in dash %}
-      {{ people }}
+      <h3>Dashboard</h3>
+      {% for people in admin_dash %}
       <div class="property_board">
-        <p> {{ people.property.administrator.user.first_name }} {{ people.property.administrator.user.last_name }} </p>
+        <p> Gestionnaire : {{ people.user.first_name }} {{ people.user.last_name }} </p>
+        {% for house in people.administrator_property.all %}
         <div class="property_name">
-          NOM PROPERTY : {{ people.property.name }}
+          Propriété : {{house.name}}
         </div>
+        {% for person in house.property_rental.all %}
+        <div class="occupant_name">
+          Locataires : {{person.occupant}}
+        </div>
+        {% endfor %}
+        {% endfor %}
         <div class="btn btn-primary btn-xl">
           Mettre à jour
         </div>
