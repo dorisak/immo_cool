@@ -12,21 +12,34 @@
     <div class="dashboard">
       <h3>Dashboard</h3>
       {% for people in admin_dash %}
-      <div class="property_board">
+      <div class="admin_board">
         <p> Gestionnaire : {{ people.user.first_name }} {{ people.user.last_name }} </p>
-        {% for house in people.administrator_property.all %}
-        <div class="property_name">
-          Propriété : {{house.name}}
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="row">
+              {% for house in people.administrator_property.all %}
+              <div class="col-lg-6 property_board">
+                <a href="{% url 'admin:rental_property_change' house.id %}" >
+                  <h5> {{house.name}} </h5>
+                </a>
+                {% for person in house.property_rental.all %}
+                <div class="occupant_name">
+                  {% load admin_urls %}
+                  <a href="{% url 'admin:occupant_occupant_change' person.occupant.id %}" >
+                    Locataires : {{person.occupant}}
+                  </a>
+                </div>
+                {% endfor %}
+              </div>
+              {% endfor %}
+            </div>
+          </div>
         </div>
-        {% for person in house.property_rental.all %}
-        <div class="occupant_name">
-          Locataires : {{person.occupant}}
-        </div>
-        {% endfor %}
-        {% endfor %}
-        <div class="btn btn-primary btn-xl">
-          Mettre à jour
-        </div>
+        <a href="admin/">
+          <div class="btn btn-primary btn-xl">
+            Mettre à jour
+          </div>
+        </a>
       </div>
     {% endfor %}
     </div>
@@ -38,8 +51,8 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center">
-        <h2 class="section-heading text-uppercase">Services</h2>
-        <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+        <h2 class="section-heading text-uppercase">Actions</h2>
+        <h3 class="section-subheading text-muted">Ajouter de nouveaux éléments</h3>
       </div>
     </div>
     <div class="row text-center">
@@ -48,7 +61,7 @@
           <i class="fas fa-circle fa-stack-2x text-primary"></i>
           <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
         </span>
-        <h4 class="service-heading">E-Commerce</h4>
+        <h4 class="service-heading">Nouveau locataire</h4>
         <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
       </div>
       <div class="col-md-4">
@@ -56,7 +69,7 @@
           <i class="fas fa-circle fa-stack-2x text-primary"></i>
           <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
         </span>
-        <h4 class="service-heading">Responsive Design</h4>
+        <h4 class="service-heading">Nouvelle propriété</h4>
         <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
       </div>
       <div class="col-md-4">
@@ -64,7 +77,7 @@
           <i class="fas fa-circle fa-stack-2x text-primary"></i>
           <i class="fas fa-lock fa-stack-1x fa-inverse"></i>
         </span>
-        <h4 class="service-heading">Web Security</h4>
+        <h4 class="service-heading">Quittance de loyer</h4>
         <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
       </div>
     </div>

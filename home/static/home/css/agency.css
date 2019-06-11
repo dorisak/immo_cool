@@ -83,6 +83,7 @@ img::-moz-selection {
 }
 
 .btn {
+  margin: 2%;
   font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   font-weight: 700;
 }
@@ -174,6 +175,7 @@ img::-moz-selection {
 }
 
 header.masthead {
+  padding-bottom: 4%;
   text-align: center;
   color: white;
   background-image: url("../img/fleurs.png");
@@ -185,7 +187,7 @@ header.masthead {
 
 header.masthead .intro-text {
   padding-top: 150px;
-  padding-bottom: 100px;
+  padding-bottom: 50px;
 }
 
 header.masthead .intro-text .intro-lead-in {
@@ -206,8 +208,7 @@ header.masthead .intro-text .intro-heading {
 
 @media (min-width: 768px) {
   header.masthead .intro-text {
-    padding-top: 300px;
-    padding-bottom: 200px;
+    padding-top: 200px;
   }
   header.masthead .intro-text .intro-lead-in {
     font-size: 40px;
@@ -226,11 +227,16 @@ header.masthead .intro-text .intro-heading {
 }
 
 .dashboard {
+  padding: 2%;
   border-width: 2px;
   border-color: white;
   border-style: solid;
   border-radius: 20px;
   background-color: #009999;
+}
+
+.property_board h5 {
+  color: white;
 }
 
 .service-heading {

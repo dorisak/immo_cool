@@ -11,23 +11,7 @@ def home(request):
     if request.method == 'GET':
         dash = []
         admin_dashboard = Administrator.objects.filter(user__last_name='test')
-        print(admin_dashboard, 'admin')
-
-        # dashboard = Rental.objects.filter(archived=False, property__administrator__in=admin_dashboard)
-        # print(dashboard, 'dash')
-        #
-        # for item in dashboard:
-        #     print(item, 'item')
-        #     details = {
-        #         'occupant': item.occupant,
-        #         'rent_amount': item.rent_amount,
-        #         'charges': item.charges,
-        #         'property': item.property,
-        #     }
-        #     dash.append(details)
-        #     print(details)
         context = {'admin_dash': admin_dashboard}
-        # print(item.property.administrator.user.first_name)
 
         template = loader.get_template('home/index.html')
         return HttpResponse(template.render(context, request))
