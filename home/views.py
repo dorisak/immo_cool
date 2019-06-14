@@ -11,16 +11,16 @@ from rental.models import Rental
 
 # TO DO: FILTRER LA VUE POUR LES PROPRIO ONLY + LOGIN VIA EMAIL
 def is_member(user):
-    return user.groups.filter(name='Member').exists()
+    return user.groups.filter(name='Gestionnaires').exists()
 
-# @user_passes_test(is_member)
+@user_passes_test(is_member)
 @login_required
 def home(request):
     """ Get the homepage and display the information for the dashboard """
     if request.method == 'GET':
         dash = []
-        admin_dashboard = Administrator.objects.filter(user__last_name='test')
-        # admin_dashboard = Administrator.objects.filter(user__email=request.user.email)
+        # admin_dashboard = Administrator.objects.filter(user__last_name='test')
+        admin_dashboard = Administrator.objects.filter(user__email=request.user.email)
         context = {'admin_dash': admin_dashboard}
 
         template = loader.get_template('home/index.html')

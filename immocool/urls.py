@@ -14,12 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf.urls import url
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf import settings
 from quittance import views
 from home import views
+
+admin.site.site_header = 'Immocool'
+admin.site.site_title = 'Immocool admin'
+admin.site.index_title = 'Gérer les locations et propriétés'
+admin.empty_value_display = '**Empty**'
 
 
 urlpatterns = [

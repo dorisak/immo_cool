@@ -58,7 +58,7 @@ class Command(BaseCommand):
                     stored_quittance.date_of_issue = today
                     stored_quittance.rental = id
                     saved_quittance = stored_quittance.quittance.save(filename, django_file, save=True)
-                    self.stdout.write('Occupant %s will receive the quittance %s' % (rental.occupant, filename))
+                    self.stdout.write('Occupant {} will receive the quittance {}'.format(rental.occupant, filename))
 
                     try:
                         occupant_name = rental.occupant.user.last_name
@@ -79,4 +79,4 @@ class Command(BaseCommand):
                         self.stdout.write("Le mail pour {} n\'a pas pu être envoyé".format(rental.occupant))
 
             except Rental.DoesNotExist:
-                self.stdout.write('Occupant "%s" does not exist.' % rental.occupant)
+                self.stdout.write('Occupant "{}" does not exist.'.format(rental.occupant))

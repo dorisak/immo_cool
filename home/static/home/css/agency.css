@@ -232,7 +232,8 @@ header.masthead .intro-text .intro-heading {
   border-color: white;
   border-style: solid;
   border-radius: 20px;
-  background-color: #009999;
+  /* background-color: #009999; */
+  background-color: rgba(211,211,211, 0.1);
 }
 
 .property_board h5 {
@@ -665,7 +666,7 @@ section#contact :-ms-input-placeholder {
 .footer {
   padding: 25px 0;
   text-align: center;
-  background-color: #212529;
+  background: -webkit-linear-gradient(left, #a445b2, #d41872, #fa4299);
   color: white;
 }
 
