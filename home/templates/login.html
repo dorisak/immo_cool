@@ -1,0 +1,63 @@
+{% extends 'home/base.html' %}
+
+{% block corps %}
+
+{% if form.errors %}
+<p>Votre nom d'utilisateur et mot de passe ne correspondent pas. Merci de réessayer.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Votre compte n'a pas accès à cette page. Merci de vous connecter.</p>
+    {% else %}
+    <p>Merci de vous connecter.</p>
+    {% endif %}
+{% endif %}
+
+<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100 p-t-30 p-b-50">
+				<span class="login100-form-title p-b-41">
+					Connexion
+				</span>
+				<form method="post" action="." class="login100-form validate-form p-b-33 p-t-5">
+          {% csrf_token %}
+					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+              {{ form.username }}
+						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+              {{ form.password }}
+						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+					</div>
+
+          <div class="error_login">
+            {% if messages %}
+            <ul class="error_message">
+              {% for message in messages %}
+              <i class="fas fa-exclamation-circle"></i>
+              <li class="{{ message.tags }}">
+                {{ message|safe }}
+              </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+          </div>
+
+					<div class="container-login100-form-btn m-t-32">
+						<button class="login100-form-btn">
+							Se connecter
+              <input type="hidden" name="next" value="{{ next }}">
+						</button>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="dropDownSelect1"></div>
+
+{% endblock %}
