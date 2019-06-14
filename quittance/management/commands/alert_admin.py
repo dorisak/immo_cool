@@ -29,7 +29,7 @@ class Command(BaseCommand):
                     property, occupant, current_month
                 )
                 email_from = settings.EMAIL_HOST_USER
-                recipient_list = ['doris.atchikiti@gmail.com',]
+                recipient_list = ['datxik@gmail.com',]
 
                 email = send_mail(
                     fail_silently=False,
