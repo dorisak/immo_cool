@@ -9,7 +9,6 @@ from .models import Administrator
 from rental.models import Rental
 
 
-# TO DO: FILTRER LA VUE POUR LES PROPRIO ONLY + LOGIN VIA EMAIL
 def is_member(user):
     return user.groups.filter(name='Gestionnaires').exists()
 
