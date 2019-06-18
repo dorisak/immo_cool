@@ -5,9 +5,6 @@ from django.core.management.base import BaseCommand, CommandError
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.core.files import File
-from django.core.mail import EmailMessage
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound
 from django.template.loader import render_to_string
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
@@ -15,7 +12,6 @@ from weasyprint import HTML
 from weasyprint.fonts import FontConfiguration
 from rental.models import Rental
 from quittance.models import Quittance
-from django.shortcuts import get_object_or_404
 from io import BytesIO
 import datetime
 import tempfile
@@ -28,22 +24,21 @@ class Command(BaseCommand):
     """ GET the quittance for each occupant """
 
     def handle(self, *args, **options):
-        rentals = Rental.objects.filter(archived=False)
+        rentals = Quittance.objects.filter(monthly_rent_paid=False, rental__archived=False)
         today = datetime.date.today()
         current_month = _(today.strftime('%B'))
 
-
-        for rental in rentals:
+        for item in rentals:
             try:
-                id = rental
-                name = slugify(rental.occupant)
+                id = item.rental
+                name = slugify(item.rental.occupant)
                 date = today.strftime('%Y-%m-%d')
-                sum_rent = rental.charges+rental.rent_amount
-                occupant_email = rental.occupant.user.email
+                sum_rent = item.rental.charges+item.rental.rent_amount
+                occupant_email = item.rental.occupant.user.email
                 filename = '{}-{}.pdf'.format(date, name)
 
                 html_string = render_to_string("quittance/quittance_base.html", {
-                    'rentals': rental,
+                    'rentals': item,
                     'today': today,
                     'sum_rent': sum_rent,
                 })
@@ -55,16 +50,16 @@ class Command(BaseCommand):
                     # Convert it to a Django File.
                     django_file = File(quittance_to_store)
                     stored_quittance = Quittance()
-                    stored_quittance.date_of_issue = today
-                    stored_quittance.rental = id
-                    saved_quittance = stored_quittance.quittance.save(filename, django_file, save=True)
-                    self.stdout.write(self.style.SUCCESS('Occupant {} will receive the quittance {}'.format(rental.occupant, filename)))
+                    item.date_of_issue = today
+                    item.rental = id
+                    saved_quittance = item.quittance.save(filename, django_file, save=True)
+                    self.stdout.write(self.style.SUCCESS('Occupant {} will receive the quittance {}'.format(item.rental.occupant, filename)))
 
                     try:
-                        occupant_name = rental.occupant.user.last_name
-                        occupant_firstname = rental.occupant.user.first_name
-                        admin_name = rental.property.administrator.user.last_name
-                        admin_firstname = rental.property.administrator.user.first_name
+                        occupant_name = item.rental.occupant.user.last_name
+                        occupant_firstname = item.rental.occupant.user.first_name
+                        admin_name = item.rental.property.administrator.user.last_name
+                        admin_firstname = item.rental.property.administrator.user.first_name
                         message = "Bonjour {} {} - Vous trouverez ci-joint la quittance de loyer pour {}; Cordialement, {} {}".format(
                             occupant_name, occupant_firstname, current_month, admin_firstname, admin_name
                         )
@@ -72,11 +67,11 @@ class Command(BaseCommand):
                         email = EmailMessage(
                             'Quittance de loyer', message, email_from,
                             [occupant_email],)
-                        email.attach_file(stored_quittance.quittance.path)
+                        email.attach_file(item.quittance.path)
                         email.send(fail_silently=False)
-                        self.stdout.write(self.style.SUCCESS("Le mail pour {} a bien été envoyé".format(rental.occupant)))
+                        self.stdout.write(self.style.SUCCESS("Le mail pour {} a bien été envoyé".format(item.rental.occupant)))
                     except Rental.DoesNotExist:
-                        self.stdout.write(self.style.WARNING("Le mail pour {} n\'a pas pu être envoyé".format(rental.occupant)))
+                        self.stdout.write(self.style.WARNING("Le mail pour {} n\'a pas pu être envoyé".format(item.rental.occupant)))
 
             except Rental.DoesNotExist:
-                self.stdout.write(self.style.WARNING('Occupant "{}" does not exist.'.format(rental.occupant)))
+                self.stdout.write(self.style.WARNING('Occupant "{}" does not exist.'.format(item.rental.occupant)))

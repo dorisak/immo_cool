@@ -12,9 +12,7 @@ import datetime
 
 
 def quittance_pdf(request):
-    #filtrer sur une location pour avoir le rendu sur un seul locataire - id locataire
-    #pour la commande : tous les rental non archivés puis boucle dans queryset et produire pdf pour chaque rental
-    #puis email avec fonction sendemail de django et enregistrer en base avec la commande personnalisée - smtp d'un compte gmail- mailgun - créer un compte mail dédié - attention aux tests mails avant la soutenance
+    """ Get data to create quittance template """
     rentals = Rental.objects.filter(archived=False).first()
     today = datetime.date.today()
     date = today.strftime('%Y-%m-%d')
