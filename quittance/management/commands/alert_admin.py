@@ -10,9 +10,10 @@ from django.core.mail import send_mail
 
 
 class Command(BaseCommand):
+    help = 'Send email alerts to Administrators when an occupant hasn\'t paid its rent'
 
     def handle(self, *args, **options):
-        logger = logging.getLogger()
+        # logger = logging.getLogger()
         today = date.today()
         current_month = today.month
         current_year = today.year
@@ -38,6 +39,6 @@ class Command(BaseCommand):
                     from_email = email_from,
                     recipient_list = recipient_list
                 )
-
+                self.stdout.write(self.style.SUCCESS("L'alerte administrateur a bien été envoyée pour le loyer en retard de {} en date du {}-{}".format(occupant, current_month, current_year)))
             except Quittance.DoesNotExist:
                 self.stdout.write('Pas de quittances impayées')

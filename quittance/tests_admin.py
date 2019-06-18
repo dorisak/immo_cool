@@ -68,11 +68,11 @@ class QuittanceModelAdminTest(TestCase):
 
     def test_bulk_rent_paid(self):
         today = date.today()
-        app1 = Quittance.objects.create(quittance='filename.pdf',
+        app1 = Quittance.objects.create(quittance='{}-{}.pdf'.format(today, self.user),
             monthly_rent_paid=False,
             date_of_issue= today,
             rental=self.rental_test
         )
-        queryset = Quittance.objects.filter(pk=1)
+        queryset = Quittance.objects.filter(pk=app1.pk)
         self.quittance_admin.bulk_rent_paid(request, queryset)
-        self.assertTrue(Quittance.objects.get(pk=1).monthly_rent_paid)
+        self.assertTrue(Quittance.objects.get(pk=app1.pk).monthly_rent_paid)

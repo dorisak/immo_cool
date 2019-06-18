@@ -58,13 +58,13 @@ class Command(BaseCommand):
                     stored_quittance.date_of_issue = today
                     stored_quittance.rental = id
                     saved_quittance = stored_quittance.quittance.save(filename, django_file, save=True)
-                    self.stdout.write('Occupant {} will receive the quittance {}'.format(rental.occupant, filename))
+                    self.stdout.write(self.style.SUCCESS('Occupant {} will receive the quittance {}'.format(rental.occupant, filename)))
 
                     try:
                         occupant_name = rental.occupant.user.last_name
                         occupant_firstname = rental.occupant.user.first_name
-                        admin_name = rental.administrator.user.last_name
-                        admin_firstname = rental.administrator.user.first_name
+                        admin_name = rental.property.administrator.user.last_name
+                        admin_firstname = rental.property.administrator.user.first_name
                         message = "Bonjour {} {} - Vous trouverez ci-joint la quittance de loyer pour {}; Cordialement, {} {}".format(
                             occupant_name, occupant_firstname, current_month, admin_firstname, admin_name
                         )
@@ -74,9 +74,9 @@ class Command(BaseCommand):
                             [occupant_email],)
                         email.attach_file(stored_quittance.quittance.path)
                         email.send(fail_silently=False)
-                        self.stdout.write("Le mail pour {} a bien été envoyé".format(rental.occupant))
+                        self.stdout.write(self.style.SUCCESS("Le mail pour {} a bien été envoyé".format(rental.occupant)))
                     except Rental.DoesNotExist:
-                        self.stdout.write("Le mail pour {} n\'a pas pu être envoyé".format(rental.occupant))
+                        self.stdout.write(self.style.WARNING("Le mail pour {} n\'a pas pu être envoyé".format(rental.occupant)))
 
             except Rental.DoesNotExist:
-                self.stdout.write('Occupant "{}" does not exist.'.format(rental.occupant))
+                self.stdout.write(self.style.WARNING('Occupant "{}" does not exist.'.format(rental.occupant)))
