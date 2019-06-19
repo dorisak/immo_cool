@@ -1,11 +1,11 @@
 from django.test import TestCase
 from django.contrib.admin.sites import AdminSite
 from django.contrib.auth.models import User
-from .models import Quittance
+from .models import Echeance, Quittance
 from rental.models import Rental, Property, Bedroom
 from home.models import Administrator
 from occupant.models import Occupant
-from .admin import QuittanceAdminModel
+from .admin import EcheanceAdminModel
 from datetime import date
 
 
@@ -15,11 +15,12 @@ class MockRequest(object):
 request = MockRequest()
 
 
-class QuittanceModelAdminTest(TestCase):
+class EcheanceModelAdminTest(TestCase):
+    """ Test for echeance sending through modeladmin action """
 
     def setUp(self):
         today = date.today()
-        self.quittance_admin = QuittanceAdminModel(Quittance, AdminSite())
+        self.echeance_admin = EcheanceAdminModel(Echeance, AdminSite())
         self.user = User.objects.create_user(
             username='jacob',
             email='jacob@…',
@@ -68,11 +69,23 @@ class QuittanceModelAdminTest(TestCase):
 
     def test_bulk_rent_paid(self):
         today = date.today()
-        app1 = Quittance.objects.create(quittance='{}-{}.pdf'.format(today, self.user),
+        app1 = Echeance.objects.create(echeance='{}-{}.pdf'.format(today, self.user),
             monthly_rent_paid=False,
             date_of_issue= today,
             rental=self.rental_test
         )
-        queryset = Quittance.objects.filter(pk=app1.pk)
-        self.quittance_admin.bulk_rent_paid(request, queryset)
-        self.assertTrue(Quittance.objects.get(pk=app1.pk).monthly_rent_paid)
+        queryset = Echeance.objects.filter(pk=app1.pk)
+        self.echeance_admin.bulk_rent_paid(request, queryset)
+        self.assertTrue(Echeance.objects.get(pk=app1.pk).monthly_rent_paid)
+
+
+    def test_bulk_rent_unpaid(self):
+        today = date.today()
+        app1 = Echeance.objects.create(echeance='{}-{}.pdf'.format(today, self.user),
+            monthly_rent_paid=True,
+            date_of_issue= today,
+            rental=self.rental_test
+        )
+        queryset = Echeance.objects.filter(pk=app1.pk)
+        self.echeance_admin.bulk_rent_unpaid(request, queryset)
+        self.assertFalse(Echeance.objects.get(pk=app1.pk).monthly_rent_paid)

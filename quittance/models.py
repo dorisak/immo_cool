@@ -39,7 +39,7 @@ def auto_delete_quittance_on_delete(sender, instance, **kwargs):
 class Echeance(models.Model):
     echeance = models.FileField(upload_to='echeances_pdf/', blank=True)
     date_of_issue = models.DateField(blank=True)
-    monthly_rent_paid = models.BooleanField(default=True)
+    monthly_rent_paid = models.BooleanField(default=False)
     rental = models.ForeignKey(
         "rental.Rental",
         on_delete=models.SET_NULL,

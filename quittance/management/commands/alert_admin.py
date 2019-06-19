@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.core import management
 from django.core.mail import mail_admins
 from datetime import datetime, date
-from quittance.models import Quittance
+from quittance.models import Echeance
 from django.conf import settings
 from django.core.mail import send_mail
 
@@ -18,7 +18,7 @@ class Command(BaseCommand):
         current_month = today.month
         current_year = today.year
 
-        in_late = Quittance.objects.filter(
+        in_late = Echeance.objects.filter(
             date_of_issue__gt = date(current_year, current_month, 2),
             monthly_rent_paid = False
         )
@@ -40,5 +40,5 @@ class Command(BaseCommand):
                     recipient_list = recipient_list
                 )
                 self.stdout.write(self.style.SUCCESS("L'alerte administrateur a bien été envoyée pour le loyer en retard de {} en date du {}-{}".format(occupant, current_month, current_year)))
-            except Quittance.DoesNotExist:
+            except Echeance.DoesNotExist:
                 self.stdout.write('Pas de quittances impayées')

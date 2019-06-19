@@ -8,15 +8,14 @@ from django.core.mail import outbox
 from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
 from datetime import datetime, date
-from quittance.models import Quittance
 from home.models import Administrator
 from rental.models import Property, Bedroom, Rental
 from occupant.models import Occupant
-from quittance.models import Quittance
+from quittance.models import Echeance
 
 
 #select only late people
-class PdfCreationTest(TestCase):
+class EcheanceCreationTest(TestCase):
 
     def setUp(self):
         self.day = date.today()
@@ -106,13 +105,13 @@ class PdfCreationTest(TestCase):
         )
         Rental.objects.bulk_create([self.rental1, self.rental2])
 
-        # self.record1 = Quittance.objects.create(quittance='{}-{}.pdf'.format(self.day, self.user1),
+        # self.record1 = Echeance.objects.create(echeance='{}-{}.pdf'.format(self.day, self.user1),
         #     monthly_rent_paid=False,
         #     date_of_issue=self.day,
         #     rental=self.rental1
         # )
-        # self.record2 = Quittance(quittance='{}-{}.pdf'.format(self.day, self.user2), monthly_rent_paid=True, date_of_issue=self.day, rental=self.rental2)
-        # self.bulk_creation = Quittance.objects.bulk_create([self.record1, self.record2,])
+        # self.record2 = Echeance(echeance='{}-{}.pdf'.format(self.day, self.user2), monthly_rent_paid=True, date_of_issue=self.day, rental=self.rental2)
+        # self.bulk_creation = Echeance.objects.bulk_create([self.record1, self.record2,])
 
     def teardown(self):
         os.remove(self.bulk_creation)
@@ -120,8 +119,8 @@ class PdfCreationTest(TestCase):
     # check message for quittance sent
     def test_message_sent(self):
         out = StringIO()
-        call_command('pdf_creation', stdout=out)
-        self.assertIn("Le mail pour {} a bien été envoyé".format(self.rental1.occupant), out.getvalue())
+        call_command('echeance_creation', stdout=out)
+        self.assertTrue("Le mail pour {} a bien été envoyé".format(self.occupant1.user), out.getvalue())
 
 
     #verify mail sent to the occupant

@@ -1,22 +1,32 @@
+import tempfile
+import os
 from io import StringIO
+from django.contrib.admin.sites import AdminSite
 from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.core import mail
 from django.core.mail import outbox
 from django.contrib.auth.models import User
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from datetime import datetime, date
 from home.models import Administrator
 from rental.models import Property, Bedroom, Rental
 from occupant.models import Occupant
-from .models import Echeance
+from quittance.models import Echeance
+from .admin import OccupantModelAdmin
 
 
-#select only late people
-class AlertAdminTest(TestCase):
+class MockRequest(object):
+    pass
 
+request = MockRequest()
+
+
+class OccupantModelAdminTest(TestCase):
+    """ Test for quittance sending through Occupant model and model admin action """
     def setUp(self):
         self.day = date.today()
+        self.occupant_admin = OccupantModelAdmin(Occupant, AdminSite())
         self.current_month = self.day.month
         self.current_year = self.day.year
         self.user1 = User(
@@ -103,13 +113,28 @@ class AlertAdminTest(TestCase):
         )
         Rental.objects.bulk_create([self.rental1, self.rental2])
 
-        self.record1 = Echeance(echeance='{}-{}.pdf'.format(self.day, self.user1), monthly_rent_paid=False, date_of_issue=self.day, rental=self.rental1)
-        self.record2 = Echeance(echeance='{}-{}.pdf'.format(self.day, self.user2), monthly_rent_paid=True, date_of_issue=self.day, rental=self.rental2)
-        Echeance.objects.bulk_create([self.record1, self.record2,])
+        # self.record1 = Quittance.objects.create(quittance='{}-{}.pdf'.format(self.day, self.user1),
+        #     date_of_issue=self.day,
+        #     rental=self.rental1
+        # )
+        # self.record2 = Quittance(quittance='{}-{}.pdf'.format(self.day, self.user2), date_of_issue=self.day, rental=self.rental2)
+        # self.bulk_creation = Quittance.objects.bulk_create([self.record1, self.record2,])
+
+    def teardown(self):
+        os.remove(self.bulk_creation)
+
+    # check message for quittance sent
+    # def test_message_sent(self):
+    #     queryset = Occupant.objects.filter(pk=self.occupant1.pk)
+    #     self.occupant_admin.bulk_send_quittance(request, queryset)
+    #
+    #     admin_message = "Le mail pour {} a bien été envoyé".format(self.occupant1.user)
+    #     self.assertEqual("Le mail pour {} {} a bien été envoyé".format(self.occupant1.user), messages.success(request, admin_message))
+    #     self.assertTrue(quer, admin_message)
 
 
-    #check number of email sent and subject
-    def test_number_email_sent(self):
+    #verify mail sent to the occupant
+    def test_mail_sent(self):
         mail.send_mail(
             'Subject here',
             'Here is the message.',
@@ -120,14 +145,9 @@ class AlertAdminTest(TestCase):
         self.assertEqual(mail.outbox[0].subject, 'Subject here')
 
 
-    #check emails are sent if people are late
-    def test_people_late(self):
-
-        in_late = Echeance.objects.filter(
-            date_of_issue__gt = date(self.current_year, self.current_month, 2),
-            monthly_rent_paid = False
-        )
-        for instance in in_late:
-            pass
-        self.assertEqual(instance, self.record1)
-        self.assertEqual(in_late.count(), 1)
+    #verify pdf creation and saving
+    # @override_settings(MEDIA_ROOT=tempfile.TemporaryDirectory(prefix='mediatest').name)
+    # def test_pdf_creation(self):
+    #     temp_file = tempfile.NamedTemporaryFile()
+    #     test_pdf = self.record1
+    #     self.assertEqual(len(Quittance.objects.all()), 1)
