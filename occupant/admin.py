@@ -56,8 +56,8 @@ def bulk_send_quittance(modeladmin, request, queryset):
                         occupant_firstname = rental.occupant.user.first_name
                         admin_name = rental.property.administrator.user.last_name
                         admin_firstname = rental.property.administrator.user.first_name
-                        message = "Bonjour {} {} - Vous trouverez ci-joint la quittance de loyer pour {}. \n Cordialement, \n {} {}".format(
-                            occupant_name, occupant_firstname, current_month, admin_firstname, admin_name
+                        message = "Bonjour {} {}, \n Vous trouverez ci-joint la quittance de loyer pour {}. \n Cordialement, \n {} {}".format(
+                            occupant_firstname, occupant_name, current_month, admin_firstname, admin_name
                         )
                         email_from = settings.EMAIL_HOST_USER
                         email = EmailMessage(

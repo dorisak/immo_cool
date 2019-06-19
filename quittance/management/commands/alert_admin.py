@@ -26,7 +26,7 @@ class Command(BaseCommand):
             try:
                 occupant = people.rental.occupant
                 property = people.rental.property
-                message = "{} - Le locataire {} n'a pas encore réglé son loyer pour le mois {}".format(
+                message = "{} - Le locataire {} n'a pas encore réglé son loyer pour {}".format(
                     property, occupant, current_month
                 )
                 email_from = settings.EMAIL_HOST_USER
