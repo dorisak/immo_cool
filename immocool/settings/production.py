@@ -1,4 +1,4 @@
-from . import *
+from .base import *
 from os import environ
 
 SECRET_KEY = os.getenv("IMMOCOOL_SECRET_KEY")
@@ -16,8 +16,8 @@ DATABASES = {
     }
 }
 
-ADMINS = os.getenv('IMMOCOOL_ADMNS')
-EMAIL_HOST = os.getenv('IMMOCOOL_EMAIL_HOST')
-EMAIL_HOST_USER = os.getenv('IMMOCOOL_EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('IMMOCOOL_EMAIL_HOST_PASSWORD')
-EMAIL_PORT = os.getenv('IMMOCOOL_EMAIL_PORT')
+# ADMINS = os.getenv('IMMOCOOL_ADMNS')
+# EMAIL_HOST = os.getenv('IMMOCOOL_EMAIL_HOST')
+# EMAIL_HOST_USER = os.getenv('IMMOCOOL_EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = os.getenv('IMMOCOOL_EMAIL_HOST_PASSWORD')
+# EMAIL_PORT = os.getenv('IMMOCOOL_EMAIL_PORT')
