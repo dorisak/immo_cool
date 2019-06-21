@@ -117,11 +117,5 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = 'logout/'
 LOGOUT_REDIRECT_URL = 'login/'
 
-
-ADMINS = config('ADMINS')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = config('EMAIL_HOST', default='localhost')
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
-EMAIL_PORT = config('EMAIL_PORT',cast=int)

@@ -24,3 +24,9 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+ADMINS = config('ADMINS')
+EMAIL_HOST = config('EMAIL_HOST', default='localhost')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+EMAIL_PORT = config('EMAIL_PORT',cast=int)
