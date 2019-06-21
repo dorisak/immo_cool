@@ -1,23 +1,23 @@
 from . import *
-import os
+from os import environ
 
-SECRET_KEY = os.environ["SECRET_KEY"]
+SECRET_KEY = os.getenv("IMMOCOOL_SECRET_KEY")
 DEBUG = False
 ALLOWED_HOSTS = ['104.248.136.26']
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['DB_NAME'],
-        'USER': os.environ['DB_USER'],
-        'PASSWORD': os.environ['DB_PWD'],
+        'NAME': os.getenv("IMMOCOOL_DB_NAME"),
+        'USER': os.getenv('IMMOCOOL_DB_USER'),
+        'PASSWORD': os.getenv('IMMOCOOL_DB_PWD'),
         'HOST': '',
         'PORT': '5432',
     }
 }
 
-ADMINS = os.environ['ADMNS']
-EMAIL_HOST = os.environ['EMAIL_HOST']
-EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
-EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
-EMAIL_PORT = os.environ['EMAIL_PORT']
+ADMINS = os.getenv('IMMOCOOL_ADMNS')
+EMAIL_HOST = os.getenv('IMMOCOOL_EMAIL_HOST')
+EMAIL_HOST_USER = os.getenv('IMMOCOOL_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('IMMOCOOL_EMAIL_HOST_PASSWORD')
+EMAIL_PORT = os.getenv('IMMOCOOL_EMAIL_PORT')
