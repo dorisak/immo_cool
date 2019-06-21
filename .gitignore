@@ -8,6 +8,5 @@ __pycache__
 .env
 pbstderr.log
 pbstdout.log
-immocool/settings/production.py
 immocool/staticfiles/
 media/
