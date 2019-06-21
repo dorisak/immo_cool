@@ -11,7 +11,7 @@ psycopg2-binary = "*"
 django-extensions = "*"
 weasyprint = "*"
 python-decouple = "*"
-
+gunicorn = "*"
 
 [requires]
 python_version = "3.6.8"

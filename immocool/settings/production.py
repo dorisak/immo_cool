@@ -1,6 +1,7 @@
 from .base import *
 from os import environ
 
+
 SECRET_KEY = os.getenv("IMMOCOOL_SECRET_KEY")
 DEBUG = False
 ALLOWED_HOSTS = ['104.248.136.26']
