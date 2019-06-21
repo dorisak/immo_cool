@@ -1,0 +1,13 @@
+env/
+__pycache__/
+.pytest_cache/
+.DS_Store
+*.pyc
+__pycache__
+.cache/
+.env
+pbstderr.log
+pbstdout.log
+immocool/settings/production.py
+immocool/staticfiles/
+media/
