@@ -4,7 +4,7 @@ from os import environ
 
 SECRET_KEY = os.getenv("IMMOCOOL_SECRET_KEY")
 DEBUG = False
-ALLOWED_HOSTS = ['104.248.136.26']
+ALLOWED_HOSTS = ['immocool.matxik.com']
 
 DATABASES = {
     'default': {
