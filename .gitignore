@@ -8,5 +8,6 @@ __pycache__
 .env
 pbstderr.log
 pbstdout.log
+immo_cool/staticfiles
 immo_cool/staticfiles/
 media/
