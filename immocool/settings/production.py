@@ -3,7 +3,7 @@ from os import environ
 
 
 SECRET_KEY = os.getenv("IMMOCOOL_SECRET_KEY")
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['immocool.matxik.com', '104.248.136.26:8001']
 
 DATABASES = {
@@ -16,7 +16,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-print(DATABASES)
 
 ADMINS = os.getenv('IMMOCOOL_ADMNS')
 EMAIL_HOST = os.getenv('IMMOCOOL_EMAIL_HOST')
