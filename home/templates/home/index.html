@@ -36,13 +36,15 @@
             </div>
           </div>
         </div>
-        <a href="admin/">
-          <div class="btn btn-primary btn-xl">
-            Gérer
-          </div>
-        </a>
-      {% empty %}
-      <p> Vous n'avez pas encore de propriétés </p>
+        <div>
+          <a href="admin/">
+            <div class="btn btn-primary btn-xl">
+              Gérer
+            </div>
+            {% empty %}
+            <p> Vous n'avez pas encore de propriétés </p>
+          </a>
+        </div>
       </div>
     {% endfor %}
     </div>
