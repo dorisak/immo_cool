@@ -12,7 +12,7 @@ from rental.models import Rental
 def is_member(user):
     return user.groups.filter(name='Gestionnaires').exists()
 
-@user_passes_test(is_member)
+# @user_passes_test(is_member)
 @login_required
 def home(request):
     """ Get the homepage and display the information for the dashboard """
