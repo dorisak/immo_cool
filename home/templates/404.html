@@ -1,13 +1,13 @@
 {% extends 'home/base.html' %}
 
 {% block corps %}
-	<div id="notfound">
-		<div class="notfound">
+	<section class="page-section">
+		<div class="container">
 			<div class="notfound-404">
 				<h1>Oops!</h1>
 				<h2>404 - La page n'a pas été trouvée</h2>
 			</div>
 			<a href="{% url 'home:index' %}">Retourner à la page d'accueil</a>
 		</div>
-	</div>
+	</section>
 {% endblock %}
