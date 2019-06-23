@@ -16,6 +16,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+print(DATABASES)
 
 ADMINS = os.getenv('IMMOCOOL_ADMNS')
 EMAIL_HOST = os.getenv('IMMOCOOL_EMAIL_HOST')
