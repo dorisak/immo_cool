@@ -668,6 +668,9 @@ section#contact :-ms-input-placeholder {
   text-align: center;
   background: -webkit-linear-gradient(left, #a445b2, #d41872, #fa4299);
   color: white;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
 }
 
 .footer span.copyright {
