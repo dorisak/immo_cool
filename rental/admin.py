@@ -1,11 +1,15 @@
 from django.contrib import admin
 from .models import Bedroom, Property, Rental
-from quittance.models import Quittance
+from quittance.models import Quittance, Echeance
 
 
 class QuittanceInline(admin.TabularInline):
     model = Quittance
-    fields = ['quittance', 'monthly_rent_paid']
+    fields = ['quittance']
+
+class EcheanceInline(admin.TabularInline):
+    model = Echeance
+    fields = ['echeance', 'monthly_rent_paid']
 
 def bulk_bedroom_occupency(modeladmin, request, queryset):
     queryset.update(occupency=True)
@@ -29,7 +33,7 @@ class RentalAdminModel(admin.ModelAdmin):
     list_display = ['name', 'rent_amount', 'bedroom', 'property', 'archived']
     list_filter = ['property', 'property__administrator']
     # POUR AFFICHER LES QUITTANCES DE LOYER
-    inlines = [QuittanceInline,]
+    inlines = [EcheanceInline, QuittanceInline]
 
     def name(self, obj):
         return obj.occupant
