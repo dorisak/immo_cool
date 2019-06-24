@@ -8,8 +8,7 @@ install:
   - 'pipenv install'
 
 env:
-  - DJANGO_SETTINGS_MODULE="purbeurre_project.settings.travis"
-  - SECRET_KEY=ck8k8bz%=jqxg(sqxax_!na5!s0nd$a2#equmxqneod5aq4)w+
+  - DJANGO_SETTINGS_MODULE="immocool.settings.travis"
 
 services:
   - postgresql
