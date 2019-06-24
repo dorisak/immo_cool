@@ -11,3 +11,4 @@ pbstdout.log
 immo_cool/staticfiles
 immo_cool/staticfiles/
 media/
+cron.log
