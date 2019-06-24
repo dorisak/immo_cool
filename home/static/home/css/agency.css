@@ -664,7 +664,7 @@ section#contact :-ms-input-placeholder {
 }
 
 .footer {
-  padding: 25px 0;
+  padding: 15px 0;
   text-align: center;
   background: -webkit-linear-gradient(left, #a445b2, #d41872, #fa4299);
   color: white;
@@ -1291,15 +1291,15 @@ body {
   color: #fff;
   text-transform: uppercase;
   padding: 13px 23px;
-  background: #ff6300;
+  background: #fed136;;
   font-size: 18px;
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
 }
 
 .notfound a:hover {
-  color: #ff6300;
-  background: #211b19;
+  color: white;
+  background: #fec503;
 }
 
 @media only screen and (max-width: 767px) {
