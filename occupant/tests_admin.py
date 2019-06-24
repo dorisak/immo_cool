@@ -1,5 +1,6 @@
 import tempfile
 import os
+from shutil import rmtree
 from io import StringIO
 from django.contrib.admin.sites import AdminSite
 from django.core.management import call_command
@@ -12,7 +13,7 @@ from datetime import datetime, date
 from home.models import Administrator
 from rental.models import Property, Bedroom, Rental
 from occupant.models import Occupant
-from quittance.models import Echeance
+from quittance.models import Quittance
 from .admin import OccupantModelAdmin
 
 
@@ -21,9 +22,11 @@ class MockRequest(object):
 
 request = MockRequest()
 
-
+temp_media_root_quitt=tempfile.mkdtemp()
+@override_settings(MEDIA_ROOT=temp_media_root_quitt)
 class OccupantModelAdminTest(TestCase):
     """ Test for quittance sending through Occupant model and model admin action """
+
     def setUp(self):
         self.day = date.today()
         self.occupant_admin = OccupantModelAdmin(Occupant, AdminSite())
@@ -113,10 +116,10 @@ class OccupantModelAdminTest(TestCase):
         )
         Rental.objects.bulk_create([self.rental1, self.rental2])
 
-        # self.record1 = Quittance.objects.create(quittance='{}-{}.pdf'.format(self.day, self.user1),
-        #     date_of_issue=self.day,
-        #     rental=self.rental1
-        # )
+        self.record1 = Quittance.objects.create(quittance='{}-{}.pdf'.format(self.day, self.user1),
+            date_of_issue=self.day,
+            rental=self.rental1
+        )
         # self.record2 = Quittance(quittance='{}-{}.pdf'.format(self.day, self.user2), date_of_issue=self.day, rental=self.rental2)
         # self.bulk_creation = Quittance.objects.bulk_create([self.record1, self.record2,])
 
@@ -145,9 +148,9 @@ class OccupantModelAdminTest(TestCase):
         self.assertEqual(mail.outbox[0].subject, 'Subject here')
 
 
-    #verify pdf creation and saving
-    # @override_settings(MEDIA_ROOT=tempfile.TemporaryDirectory(prefix='mediatest').name)
-    # def test_pdf_creation(self):
-    #     temp_file = tempfile.NamedTemporaryFile()
-    #     test_pdf = self.record1
-    #     self.assertEqual(len(Quittance.objects.all()), 1)
+    # verify pdf creation and saving
+    def test_pdf_creation(self):
+        temp_file = tempfile.NamedTemporaryFile()
+        test_pdf = self.record1
+        self.assertEqual(len(Quittance.objects.all()), 1)
+        rmtree(temp_media_root_quitt, ignore_errors=True)

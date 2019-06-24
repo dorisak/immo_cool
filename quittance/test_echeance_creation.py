@@ -1,5 +1,6 @@
 import tempfile
 import os
+from shutil import rmtree
 from io import StringIO
 from django.core.management import call_command
 from django.core.management.base import CommandError
@@ -14,8 +15,16 @@ from occupant.models import Occupant
 from quittance.models import Echeance
 
 
+class MockRequest(object):
+    pass
+
+request = MockRequest()
+
 #select only late people
+temp_media_root=tempfile.mkdtemp()
+@override_settings(MEDIA_ROOT=temp_media_root)
 class EcheanceCreationTest(TestCase):
+    """ Test for echeance sending through management command echeance_creation and model admin action """
 
     def setUp(self):
         self.day = date.today()
@@ -105,11 +114,11 @@ class EcheanceCreationTest(TestCase):
         )
         Rental.objects.bulk_create([self.rental1, self.rental2])
 
-        # self.record1 = Echeance.objects.create(echeance='{}-{}.pdf'.format(self.day, self.user1),
-        #     monthly_rent_paid=False,
-        #     date_of_issue=self.day,
-        #     rental=self.rental1
-        # )
+        self.record1 = Echeance.objects.create(echeance='{}-{}.pdf'.format(self.day, self.user1),
+            monthly_rent_paid=False,
+            date_of_issue=self.day,
+            rental=self.rental1
+        )
         # self.record2 = Echeance(echeance='{}-{}.pdf'.format(self.day, self.user2), monthly_rent_paid=True, date_of_issue=self.day, rental=self.rental2)
         # self.bulk_creation = Echeance.objects.bulk_create([self.record1, self.record2,])
 
@@ -136,8 +145,8 @@ class EcheanceCreationTest(TestCase):
 
 
     #verify pdf creation and saving
-    # @override_settings(MEDIA_ROOT=tempfile.TemporaryDirectory(prefix='mediatest').name)
-    # def test_pdf_creation(self):
-    #     temp_file = tempfile.NamedTemporaryFile()
-    #     test_pdf = self.record1
-    #     self.assertEqual(len(Quittance.objects.all()), 1)
+    def test_pdf_creation(self):
+        temp_file = tempfile.NamedTemporaryFile()
+        test_pdf = self.record1
+        self.assertEqual(len(Echeance.objects.all()), 1)
+        rmtree(temp_media_root, ignore_errors=True)
