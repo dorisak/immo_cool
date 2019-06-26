@@ -30,6 +30,10 @@
                     {{person.occupant}}
                   </a>
                 </div>
+                {% empty %}
+                <div>
+                  <p>Vous n'avez pas encore de locataires pour cette propriété</p>
+                </div>
                 {% endfor %}
               </div>
               {% endfor %}
@@ -75,6 +79,17 @@
       <div class="col-md-3">
         <span class="fa-stack fa-4x">
           <i class="fas fa-circle fa-stack-2x text-primary"></i>
+          <i class="far fa-address-card fa-stack-1x fa-inverse"></i>
+        </span>
+        <a href="{% url 'admin:rental_rental_add' %}" >
+          <div class="btn btn-primary btn-xl">
+            Nouvelle location
+          </div>
+        </a>
+      </div>
+      <div class="col-md-3">
+        <span class="fa-stack fa-4x">
+          <i class="fas fa-circle fa-stack-2x text-primary"></i>
           <i class="fas fa-home fa-stack-1x fa-inverse"></i>
         </span>
         <a href="{% url 'admin:rental_property_add' %}" >
@@ -88,20 +103,9 @@
           <i class="fas fa-circle fa-stack-2x text-primary"></i>
           <i class="fas fa-euro-sign fa-stack-1x fa-inverse"></i>
         </span>
-        <a href="{% url 'admin:quittance_quittance_changelist' %}" >
+        <a href="{% url 'admin:quittance_echeance_changelist' %}" >
           <div class="btn btn-primary btn-xl">
-            Quittances de loyer
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3">
-        <span class="fa-stack fa-4x">
-          <i class="fas fa-circle fa-stack-2x text-primary"></i>
-          <i class="far fa-address-card fa-stack-1x fa-inverse"></i>
-        </span>
-        <a href="{% url 'admin:rental_rental_add' %}" >
-          <div class="btn btn-primary btn-xl">
-            Nouvelle location
+            Echéances de loyer
           </div>
         </a>
       </div>
