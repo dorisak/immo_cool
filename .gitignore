@@ -6,9 +6,9 @@ __pycache__/
 __pycache__
 .cache/
 .env
-pbstderr.log
-pbstdout.log
+pbstderr_imcl.log
+pbstdout_imcl.log
 immo_cool/staticfiles
-immo_cool/staticfiles/
+immo_cool/media/
 media/
 cron.log
