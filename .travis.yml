@@ -14,5 +14,8 @@ env:
 services:
   - postgresql
 
+addons: 
+  postgresql: “9.6”
+
 script:
   - ./manage.py test

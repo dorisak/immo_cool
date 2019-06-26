@@ -44,10 +44,9 @@ class OccupantModelAdmin(admin.ModelAdmin):
                         'sum_rent': sum_rent,
                     })
                     html = HTML(string=html_string)
-                    with tempfile.TemporaryDirectory() as tmpdirname:
-                        result = html.write_pdf(target='{tmpdirname}{filename}'.format(tmpdirname=tempfile.gettempdir(), filename=filename))
-
-                        quittance_to_store = open('{tmpdirname}{filename}'.format(tmpdirname=tempfile.gettempdir(), filename=filename), 'rb+')
+                    with tempfile.TemporaryDirectory(dir=settings.MEDIA_ROOT) as tmpdirname:
+                        result = html.write_pdf(target='{tmpdirname}{filename}'.format(tmpdirname=tmpdirname, filename=filename))
+                        quittance_to_store = open('{tmpdirname}{filename}'.format(tmpdirname=tmpdirname, filename=filename), 'rb+')
                         # Convert it to a Django File.
                         django_file = File(quittance_to_store)
                         stored_quittance = Quittance()
