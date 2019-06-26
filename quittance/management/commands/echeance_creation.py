@@ -46,8 +46,10 @@ class Command(BaseCommand):
                 with tempfile.TemporaryDirectory(dir=settings.MEDIA_ROOT) as tmpdirname:
                     #PAS UTILE enregistrer dans le Mediaroot/echeance_pdf
                     #PAS UTILE prefix=settings.MEDIAROOT/echeance_pdf/tmp 
+		    self.stdout.write(tmpdirname)
+		    self.stdout.write(gettempdir)
                     result = html.write_pdf(target='{tmpdirname}{filename}'.format(tmpdirname=tempfile.gettempdir(), filename=filename))
-
+	
                     echeance_to_store = open('{tmpdirname}{filename}'.format(tmpdirname=tempfile.gettempdir(), filename=filename), 'rb+')
                     # Convert it to a Django File.
                     django_file = File(echeance_to_store)
