@@ -3,6 +3,7 @@ import logging
 from django.core.management.base import BaseCommand, CommandError
 from django.core import management
 from django.core.mail import mail_admins
+from django.utils.translation import ugettext_lazy as _
 from datetime import datetime, date
 from quittance.models import Echeance
 from django.conf import settings
@@ -16,6 +17,7 @@ class Command(BaseCommand):
         # logger = logging.getLogger()
         today = date.today()
         current_month = today.month
+        current_month_format = _(today.strftime('%B'))
         current_year = today.year
 
         in_late = Echeance.objects.filter(
@@ -27,7 +29,7 @@ class Command(BaseCommand):
                 occupant = people.rental.occupant
                 property = people.rental.property
                 message = "{} - Le locataire {} n'a pas encore réglé son loyer pour {}".format(
-                    property, occupant, current_month
+                    property, occupant, current_month_format
                 )
                 email_from = settings.EMAIL_HOST_USER
                 recipient_list = ['datxik@gmail.com',]
