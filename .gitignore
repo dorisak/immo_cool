@@ -11,4 +11,5 @@ pbstdout_imcl.log
 immo_cool/staticfiles
 immo_cool/media/
 media/
+cron_imcl.log
 cron.log
