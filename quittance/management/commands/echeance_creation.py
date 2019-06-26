@@ -43,7 +43,9 @@ class Command(BaseCommand):
                     'sum_rent': sum_rent,
                 })
                 html = HTML(string=html_string)
-                with tempfile.TemporaryDirectory() as tmpdirname:
+                with tempfile.TemporaryDirectory(dir=settings.MEDIA_ROOT) as tmpdirname:
+                    #PAS UTILE enregistrer dans le Mediaroot/echeance_pdf
+                    #PAS UTILE prefix=settings.MEDIAROOT/echeance_pdf/tmp 
                     result = html.write_pdf(target='{tmpdirname}{filename}'.format(tmpdirname=tempfile.gettempdir(), filename=filename))
 
                     echeance_to_store = open('{tmpdirname}{filename}'.format(tmpdirname=tempfile.gettempdir(), filename=filename), 'rb+')

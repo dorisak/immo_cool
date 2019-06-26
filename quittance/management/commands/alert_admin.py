@@ -15,7 +15,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # logger = logging.getLogger()
         today = date.today()
-        current_month = today.month
+        current_month = _(today.strftime('%B'))
         current_year = today.year
 
         in_late = Echeance.objects.filter(
