@@ -7,7 +7,7 @@ SECRET_KEY = config('SECRET_KEY')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '',
+        'NAME': 'immocool',
         'USER': 'postgres',
         'PASSWORD': '',
         'HOST': '',
