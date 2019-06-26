@@ -44,8 +44,10 @@ class Command(BaseCommand):
                 })
                 html = HTML(string=html_string)
                 with tempfile.TemporaryDirectory(dir=settings.MEDIA_ROOT) as tmpdirname:
+                    self.stdout.write(tmpdirname)
+                    self.stdout.write(tempfile.gettempdir())
                     #PAS UTILE enregistrer dans le Mediaroot/echeance_pdf
-                    #PAS UTILE prefix=settings.MEDIAROOT/echeance_pdf/tmp 
+                    #PAS UTILE prefix=settings.MEDIAROOT/echeance_pdf/tmp
                     result = html.write_pdf(target='{tmpdirname}{filename}'.format(tmpdirname=tempfile.gettempdir(), filename=filename))
 
                     echeance_to_store = open('{tmpdirname}{filename}'.format(tmpdirname=tempfile.gettempdir(), filename=filename), 'rb+')
