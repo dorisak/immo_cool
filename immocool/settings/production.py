@@ -2,7 +2,7 @@ from .base import *
 from os import environ
 
 
-SECRET_KEY = os.getenv("IMMOCOOL_SECRET_KEY")
+SECRET_KEY = os.getenv("IMMOCOOL_SECRET_KEY", "OZDOZFOXOZDggozdtkx")
 DEBUG = True
 ALLOWED_HOSTS = ['immocool.matxik.com', '104.248.136.26:8001']
 
