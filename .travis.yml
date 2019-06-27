@@ -13,9 +13,7 @@ install:
   - pipenv install
   # - psql -c 'create database travis_ci_test;' -U postgres
 
-env:
-  global:
-  - DJANGO_SETTINGS_MODULE="immocool.settings.travis"
+env: DJANGO_SETTINGS_MODULE="immocool.settings.travis"
 
 addons: 
   postgresql: “9.6”
