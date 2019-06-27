@@ -18,7 +18,7 @@ install:
   - pipenv install
 
 before_script:
-    - cp settings/database.yml.travis config/database.yml
+    - cp immocool/settings/database.yml.travis immocool/settings/database.yml
 
 env:
     global:
