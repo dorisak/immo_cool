@@ -8,4 +8,4 @@ export IMMOCOOL_DB_USER="adminic"
 export IMMOCOOL_DB_PWD="Pikool84"
 
 cd /home/doris/immo_cool
-$PY manage.py echeance_base --settings=$DJANGO_SETTINGS_MODULE
+$PY manage.py echeance_creation --settings=$DJANGO_SETTINGS_MODULE
