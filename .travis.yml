@@ -6,17 +6,17 @@ python:
 services:
   - postgresql
 
+addons: 
+  postgresql: “9.6”
+
 # before_script:
 
 install:
   - pip install pipenv
   - pipenv install
-  # - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -c 'create database travis_ci_test;' -U postgres
 
 env: DJANGO_SETTINGS_MODULE="immocool.settings.travis"
-
-addons: 
-  postgresql: “9.6”
 
 
 script:
