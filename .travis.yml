@@ -22,4 +22,4 @@ addons: 
 
 
 script:
-  - ./manage.py test --DJANGO_SETTINGS_MODULE="immocool.settings.travis"
+  - ./manage.py test
