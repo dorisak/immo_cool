@@ -22,7 +22,6 @@ before_script:
 
 env:
     global:
-    - PGPORT=5433
     -  DJANGO_SETTINGS_MODULE="immocool.settings.travis"
 
 script:
