@@ -5,10 +5,8 @@ python:
 
 services:
   - postgresql
-    # ports:
-    #   - "5431:5432"
-    # environnement:
-    #   - DB_CONNECTION=psql
+  ports:
+    - "5431:5432"
 
 addons: 
   postgresql: “9.6”
