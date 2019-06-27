@@ -3,19 +3,21 @@ language: python
 python:
   - "3.6"
 
-before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
+services:
+  - postgresql
+
+# before_script:
 
 install:
   - pip install pipenv
   - pipenv install
+  - psql -c 'create database travis_ci_test;' -U postgres
 
 env:
   global:
   - DJANGO_SETTINGS_MODULE="immocool.settings.travis"
 
-services:
-  - postgresql
+
 
 addons: 
   postgresql: “9.6”
