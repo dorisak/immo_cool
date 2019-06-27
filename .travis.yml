@@ -9,7 +9,9 @@ services:
 addons: 
   postgresql: “9.6”
 
-# before_script:
+before_script:
+  before_script:
+  - cp config/database.yml.travis config/database.yml
 
 install:
   - pip install pipenv
