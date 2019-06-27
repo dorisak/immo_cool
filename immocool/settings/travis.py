@@ -12,7 +12,7 @@ if 'TRAVIS' in os.environ:
             'NAME': 'travis_ci_test',
             'USER': 'postgres',
             'PASSWORD': '',
-            'HOST': 'localhost',
+            'HOST': '127.0.0.1/32',
             'PORT': '5433',
         },
     }
