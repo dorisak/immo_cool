@@ -5,19 +5,22 @@ python:
 
 services:
   - postgresql
+    ports:
+      - "5431:5432"
+    environnement:
+      - DB_CONNECTION=psql
 
 addons: 
   postgresql: “9.6”
 
-before_script:
-  - cp config/database.yml.travis config/database.yml
 
 install:
   - pip install pipenv
   - pipenv install
-  # - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -c 'create database travis_ci_test;' -U postgres
 
-env: DJANGO_SETTINGS_MODULE="immocool.settings.travis"
+env:
+  - DJANGO_SETTINGS_MODULE="immocool.settings.travis"
 
 
 script:
