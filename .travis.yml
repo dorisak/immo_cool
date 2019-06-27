@@ -6,13 +6,20 @@ python:
 services:
   - postgresql
 
-addons: 
-  postgresql: “9.6”
+# addons: 
+#   postgresql: “9.6”
+
+before_install:
+  - sudo /etc/init.d/postgresql stop
+  - sudo /etc/init.d/postgresql start 9.6
 
 install:
   - pip install pipenv
   - pipenv install
-  - psql -c 'create database travis_ci_test;' -U postgres
+
+before_script:
+    - psql -c 'create database travis_ci_test;' -U postgres
+    - cp settings/database.yml.travis
 
 env:
     global:
