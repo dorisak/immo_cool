@@ -7,8 +7,8 @@ services:
   - postgresql
     # ports:
     #   - "5431:5432"
-    environnement:
-      - DB_CONNECTION=psql
+    # environnement:
+    #   - DB_CONNECTION=psql
 
 addons: 
   postgresql: “9.6”
