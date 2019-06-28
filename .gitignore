@@ -13,4 +13,5 @@ immo_cool/media/
 media/
 cron_imcl.log
 cron.log
+cron.sh
 /staticfiles
