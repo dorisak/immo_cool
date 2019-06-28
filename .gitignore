@@ -14,4 +14,5 @@ media/
 cron_imcl.log
 cron.log
 cron.sh
+cron_alert.sh
 /staticfiles
