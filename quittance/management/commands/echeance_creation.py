@@ -17,11 +17,11 @@ import datetime
 import tempfile
 
 
-help = 'Create an echeance if the rent is not paid'
+help = 'Create an echeance every month to alert the occupants to pay their rent'
 
 
 class Command(BaseCommand):
-    """ GET the echeance for each rent unpaid """
+    """ GET the echeance for each rent """
 
     def handle(self, *args, **options):
         echeance = Echeance.objects.filter(monthly_rent_paid=False, rental__archived=False)

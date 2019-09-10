@@ -8,9 +8,11 @@ https://docs.djangoproject.com/en/2.2/howto/deployment/wsgi/
 """
 
 import os
-
+import sqreen
 from django.core.wsgi import get_wsgi_application
 
+
+sqreen.start()
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'immocool.settings')
 
 application = get_wsgi_application()

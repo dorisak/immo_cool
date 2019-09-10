@@ -2,12 +2,11 @@ from django.contrib import admin
 from .models import Quittance, Echeance
 
 
-#VOIR SIL FAUT LIER LES QUITTANCES ET LES ECHEANCES
 class QuittanceAdminModel(admin.ModelAdmin):
     list_display = ['rental', 'date_of_issue']
     date_hierarchy = 'date_of_issue'
     list_filter = ['rental__property__administrator', 'rental__property', 'rental__occupant']
-    
+
 
 class EcheanceAdminModel(admin.ModelAdmin):
     def bulk_rent_unpaid(modeladmin, request, queryset):
