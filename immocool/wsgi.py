@@ -6,13 +6,13 @@ It exposes the WSGI callable as a module-level variable named ``application``.
 For more information on this file, see
 https://docs.djangoproject.com/en/2.2/howto/deployment/wsgi/
 """
+import sqreen
+sqreen.start()
 
 import os
-import sqreen
 from django.core.wsgi import get_wsgi_application
 
 
-sqreen.start()
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'immocool.settings')
 
 application = get_wsgi_application()
